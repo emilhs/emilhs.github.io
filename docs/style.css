@@ -1,0 +1,51 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+}
+
+#header {
+  z-index: 2;
+  position: fixed; /* Fixed position - sit on top of the page */
+  top: 0; 
+  height: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  width: 90%; /* Full width */
+}
+
+#myname {
+  margin: 0px;
+  padding: 50px 0px;
+  background-color: #f1f1f1; /* Grey background */
+  /*padding: 50px 10px; /* Some padding */
+  color: black;
+  text-align: center; /* Centered text */
+  font-size: 90px; /* Big font size */ 
+  font-weight: bold; 
+  transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+}
+
+#mylinks {
+  margin: 0px;
+  padding: 0px;
+  background-color: #791a1a; /* Grey background */
+  padding: 10px 0px; /* Some padding */
+  color: black;
+  text-align: center; /* Centered text */
+  font-size: 30px; /* Big font size */ 
+  font-weight: bold; 
+  transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+}
+
+.pars{
+  z-index: 1;
+  position:relative;
+  margin-top:280px;
+  margin-left: 6%;
+  margin-right: 6%;
+  width: 88%; /* Full width */
+  font-size:30px;
+}
