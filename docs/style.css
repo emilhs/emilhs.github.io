@@ -4,46 +4,57 @@ body, html {
     margin: 0px;
 }
 
+a:link, a:visited{
+  color:#000000;
+  text-decoration: none;
+}
+
 #header {
   z-index: 2;
-  position: fixed; /* Fixed position - sit on top of the page */
   top: 0; 
-  height: 20%;
-  margin-left: 5%;
-  margin-right: 5%;
+  /*margin-left: 5%;
+  margin-right: 5%;*/
   margin-top: 0px;
   margin-bottom: 0px;
-  width: 90%; /* Full width */
+  width: 100%; /* Full width */
 }
 
 #myname {
   margin: 0px;
-  padding: 50px 0px;
-  background-color: #f1f1f1; /* Grey background */
-  /*padding: 50px 10px; /* Some padding */
-  color: black;
   text-align: center; /* Centered text */
   font-size: 90px; /* Big font size */ 
   font-weight: bold; 
-  transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
-}
-
-#mylinks {
-  margin: 0px;
-  padding: 0px;
-  background-color: #791a1a; /* Grey background */
-  padding: 10px 0px; /* Some padding */
+  padding: 500px 30% 20px; /* Some padding */
   color: black;
   text-align: center; /* Centered text */
   font-size: 30px; /* Big font size */ 
+  /*box-shadow: 0px 4px 8px black;*/
   font-weight: bold; 
-  transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+  background-image: url("photos/IMG_0796.JPG");
+  background-size: 100%;
+  background-position-y: 20%;
+}
+
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  padding: 5px 30% 5px;
+  background-image: url("photos/IMG_0796.JPG");
+  background-size: 100%;
+  background-position-y: -620px;
+  text-align: center; /* Centered text */
+  font-style: white;
+  font-size: 30px; /* Big font size */ 
+  /*box-shadow: 0px 4px 8px black;*/
+  font-weight: bold; 
 }
 
 .pars{
   z-index: 1;
-  position:relative;
-  margin-top:280px;
+  margin-top: 600px;
   margin-left: 6%;
   margin-right: 6%;
   width: 88%; /* Full width */
