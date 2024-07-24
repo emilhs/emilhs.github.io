@@ -1,5 +1,5 @@
-chooseapp = "/Users/emil.hodzicsantor/Documents/GitHub/emilhs.github.io/app"
-choosedest = "/Users/emil.hodzicsantor/Documents/GitHub/emilhs.github.io/docs"
+chooseapp = "/Users/emil.hodzicsantor/Documents/GitHub/emilhs.github.io/power-app/app"
+choosedest = "/Users/emil.hodzicsantor/Documents/GitHub/emilhs.github.io/power-app/docs"
 
 # Export
 
