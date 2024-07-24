@@ -15,8 +15,8 @@ library(tidyverse)
 library(ggplot2)
 library(pwr)
 
-pair_p <- function(myn, b, a, mean, sd) power.t.test(n = myn, d = mean/sd, power = NULL, sig.level = 1-a/2)$power
-pair_n <- function(myn, b, a, mean, sd) power.t.test(n = NULL, d = mean/sd, power = b, sig.level = 1-a/2)$n
+pair_p <- function(myn, b, a, mean, sd) power.t.test(n = myn, delta = mean/sd, power = NULL, sig.level = 1-a/2)$power
+pair_n <- function(myn, b, a, mean, sd) power.t.test(n = NULL, delta = mean/sd, power = b, sig.level = 1-a/2)$n
 
 prop_p <- function(myn, b, a, prop1, prop2) power.prop.test(n = myn, p1 = prop1, p2 = prop2, power = NULL, sig.level = 1-a/2)$power
 prop_n <- function(myn, b, a, prop1, prop2) power.prop.test(n = NULL, p1 = prop1, p2 = prop2, power = b, sig.level = 1-a/2)$n
@@ -113,7 +113,7 @@ server <- function(input, output) {
         ))
       }
     }
-    
+    # INDEPENDENT DATA
     else if (c2 == choices2[1] && c3 == choices3[2]){
       selectors <- tagAppendChild(selectors, tagList(
         fluidRow(
@@ -144,9 +144,8 @@ server <- function(input, output) {
         ))
       }
     }
-    
     # CTRL/TREATMENT
-    else if (c4 == choices4[1]){
+    else if (c2 == choices2[2] && c4 == choices4[1]){
       selectors <- tagAppendChild(selectors, tagList(
         fluidRow(
           column(width = 6, numericInput(inputId = "rrControl", "Response rate in control group", value = 0.2, min = 0, max = 1)),
@@ -172,7 +171,7 @@ server <- function(input, output) {
       }
     }
     # COHORT POWER
-    else if (c4 == choices4[2]){
+    else if (c2 == choices2[2] && c4 == choices4[2]){
       selectors <- tagAppendChild(selectors, tagList(
         fluidRow(
           column(width = 6, numericInput("ueRatio", "Unexposed:Exposed Ratio:", min = 0, value = 2)),
@@ -200,7 +199,7 @@ server <- function(input, output) {
       }
     }
     # CASE-CONTROL POWER
-    else if (c4 == choices4[3]){
+    else if (c2 == choices2[2] && c4 == choices4[3]){
       selectors <- tagAppendChild(selectors, tagList(
         fluidRow(
           column(width = 6, numericInput("ccRatio", "Control:Case Ratio:", min = 0, value = 4)),
@@ -240,7 +239,7 @@ server <- function(input, output) {
     c4 <- input$type4
     
     # PAIRED SAMPLES
-    if (c3 == choices3[1]){
+    if (c2 == choices2[1] && c3 == choices3[1]){
       m <- input$mChange
       sd <- input$sdChange
       a <- input$alpha
@@ -291,9 +290,8 @@ server <- function(input, output) {
         return(ccdf)
       }
     }
-    
     # INDEPENDENT SAMPLES
-    else if (c3 == choices3[2]){
+    else if (c2 == choices2[1] && c3 == choices3[2]){
       m1 <- input$mChange1
       sd1 <- input$sdChange1
       m2 <- input$mChange2
@@ -308,9 +306,8 @@ server <- function(input, output) {
         
       }
     }
-    
     # PROPORTION INFO
-    else if (c4 == choices4[1]){
+    else if (c2 == choices2[2] && c4 == choices4[1]){
       ctrl <- input$rrControl
       trt <- input$rrTreatment
       a <- input$alpha
@@ -361,9 +358,8 @@ server <- function(input, output) {
         return(ccdf)
       }
     }
-    
     # COHORT
-    else if (c4 == choices4[2]){
+    else if (c2 == choices2[2] && c4 == choices4[2]){
       a <- input$alpha
       uer <- input$ueRatio
       riu <- input$riskUe
@@ -413,9 +409,8 @@ server <- function(input, output) {
         return(ccdf)
       }
     }
-    
     # CASE-CONTROL
-    else if (c4 == choices4[3]){
+    else if (c2 == choices2[2] && c4 == choices4[3]){
       a <- input$alpha
       uer <- input$ccRatio
       riu <- input$riskUe
@@ -463,10 +458,7 @@ server <- function(input, output) {
         return(ccdf)
       }
     }
-    
-    else{
-      ccdf <- matrix(nrow = NULL, ncol = NULL)
-    }
+    else{ccdf <- matrix(nrow = NULL, ncol = NULL)}
     ccdf
   })
   
@@ -508,7 +500,7 @@ server <- function(input, output) {
     c4 <- input$type4
     
     # PAIRED DATA
-    if (c3 == choices3[1]){
+    if (c2 == choices2[1] && c3 == choices3[1]){
       m <- input$mChange
       sd <- input$sdChange
       a <- input$alpha
@@ -526,7 +518,7 @@ server <- function(input, output) {
       }
     }
     # INDEPENDENT DATA
-    else if (c3 == choices3[2]){
+    else if (c2 == choices2[1] && c3 == choices3[2]){
       m1 <- as.numeric(input$mChange1)
       sd1 <- as.numeric(input$sdChange1)
       m2 <- as.numeric(input$mChange2)
@@ -551,7 +543,7 @@ server <- function(input, output) {
       }
     }
     # PROPORTION DATA
-    else if (c4 == choices4[1]){
+    else if (c2 == choices2[2] && c4 == choices4[1]){
       a <- input$alpha
       ctrl <- input$rrControl
       trt <- input$rrTreatment
@@ -569,7 +561,7 @@ server <- function(input, output) {
       }
     }
     # COHORT DATA
-    else if (c4 == choices4[2]){
+    else if (c2 == choices2[2] && c4 == choices4[2]){
       a <- input$alpha
       uer <- input$ueRatio
       riu <- input$riskUe
@@ -586,7 +578,7 @@ server <- function(input, output) {
       }
     }
     # CASE-CONTROL DATA
-    else if (c4 == choices4[3]){
+    else if (c2 == choices2[2] && c4 == choices4[3]){
       a <- input$alpha
       uer <- input$ccRatio
       riu <- input$riskUe
