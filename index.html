@@ -9,17 +9,48 @@
 <h1>Provincial Team Qualification Calculator</h1>
 
 <p>
-Select the athlete's two best performances and enter the times in seconds.
-(Placeholder standards: 500m = 60 s, 1000m = 120 s, 1500m = 180 s)
+Select the athlete's two best performances and enter the times in seconds. The calculator will reference the Canadian Record (CDN REC) standards from Appendix B.
 </p>
+
+<h2>Athlete Category</h2>
+
+<label>Gender:</label>
+<select id="gender" onchange="updateEventOptions()">
+    <option value="">-- Select Gender --</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+</select>
+
+<br><br>
+
+<label>Age Category:</label>
+<select id="ageCategory">
+    <option value="">-- Select Category --</option>
+    <option value="neo14">Neo Junior 14 (DOB: 1/7/2010 - 30/6/2011)</option>
+    <option value="neo15">Neo Junior 15 (DOB: 1/7/2009 - 30/6/2010)</option>
+    <option value="junior16">Junior 16 (DOB: 1/7/2008 - 30/6/2009)</option>
+    <option value="junior17">Junior 17 (DOB: 1/7/2007 - 30/6/2008)</option>
+    <option value="junior18">Junior 18 (DOB: 1/7/2006 - 30/6/2007)</option>
+</select>
+
+<br><br>
+
+<label>Track Type:</label>
+<select id="trackType" onchange="updateEventOptions()">
+    <option value="">-- Select Track Type --</option>
+    <option value="st">Short Track (ST)</option>
+    <option value="lt">Long Track (LT)</option>
+</select>
+
+<div style="display: flex; gap: 30px; margin-top: 30px;">
+
+<div style="flex: 1;">
 
 <h2>Performance 1</h2>
 
 <label>Event:</label>
 <select id="event1">
-    <option value="60">500m (Standard: 60 s)</option>
-    <option value="120">1000m (Standard: 120 s)</option>
-    <option value="180">1500m (Standard: 180 s)</option>
+    <option value="">-- Select Event --</option>
 </select>
 
 <label>Time (seconds):</label>
@@ -29,9 +60,7 @@ Select the athlete's two best performances and enter the times in seconds.
 
 <label>Event:</label>
 <select id="event2">
-    <option value="60">500m (Standard: 60 s)</option>
-    <option value="120">1000m (Standard: 120 s)</option>
-    <option value="180">1500m (Standard: 180 s)</option>
+    <option value="">-- Select Event --</option>
 </select>
 
 <label>Time (seconds):</label>
@@ -41,46 +70,108 @@ Select the athlete's two best performances and enter the times in seconds.
 
 <button onclick="calculate()">Calculate Qualification</button>
 
-<hr>
-
 <div id="results"></div>
 
-<hr>
+</div>
 
-<h2>Example from Policy</h2>
+<div style="flex: 1; border: 2px solid #333; padding: 20px; border-radius: 8px; background-color: #f9f9f9; height: fit-content;">
+
+<h3 style="margin-top: 0;">Example from Policy</h3>
 
 <p>
-Skater A has:
+<strong>Skater A:</strong>
 </p>
 
-<ul>
+<ul style="margin: 10px 0;">
 <li>500m = 43.707 s</li>
 <li>1500m = 2:15.964 (135.964 s)</li>
 <li>500m Standard = 39.660 s</li>
 <li>1500m Standard = 2:06.565 (126.565 s)</li>
 </ul>
 
-<p>
+<p style="margin: 10px 0;">
 500m Percentage = 43.707 ÷ 39.660 × 100 = 110.192%
 </p>
 
-<p>
+<p style="margin: 10px 0;">
 1500m Percentage = 135.964 ÷ 126.565 × 100 = 107.426%
 </p>
 
-<p>
+<p style="margin: 10px 0;">
 Cumulative Average = (110.192 + 107.426) ÷ 2 = 108.809%
 </p>
 
-<p>
+<p style="margin: 10px 0; font-weight: bold; color: #2d5aa5;">
 Result: Team Level A3
 </p>
 
 <button onclick="runExample()">Run Example</button>
 
-<div id="exampleResult"></div>
+<div id="exampleResult" style="margin-top: 10px;"></div>
+
+</div>
+
+</div>
 
 <script>
+
+// Canadian Record (CDN REC) standards in seconds
+const cdnRecords = {
+    st: {
+        male: {
+            "500": { time: 39.66, label: "500m (CDN REC: 39.66 s)" },
+            "1000": { time: 81.82, label: "1000m (CDN REC: 1:21.82)" },
+            "1500": { time: 126.57, label: "1500m (CDN REC: 2:06.57)" }
+        },
+        female: {
+            "500": { time: 41.94, label: "500m (CDN REC: 41.94 s)" },
+            "1000": { time: 87.47, label: "1000m (CDN REC: 1:27.47)" },
+            "1500": { time: 136.64, label: "1500m (CDN REC: 2:16.64)" }
+        }
+    },
+    lt: {
+        male: {
+            "500": { time: 35.80, label: "500m (OO: 35.80 s)" },
+            "1000": { time: 70.72, label: "1000m (OO: 1:10.72)" },
+            "1500": { time: 108.13, label: "1500m (OO: 1:48.13)" },
+            "5000": { time: 390.80, label: "5000m (OO: 6:30.80)" },
+            "10000": { time: 816.21, label: "10000m (OO: 13:36.21)" }
+        },
+        female: {
+            "500": { time: 39.45, label: "500m (OO: 39.45 s)" },
+            "1000": { time: 77.04, label: "1000m (OO: 1:17.04)" },
+            "1500": { time: 120.70, label: "1500m (OO: 2:00.70)" },
+            "3000": { time: 253.17, label: "3000m (OO: 4:13.17)" },
+            "5000": { time: 441.39, label: "5000m (OO: 7:21.39)" }
+        }
+    }
+};
+
+function updateEventOptions() {
+    const gender = document.getElementById("gender").value;
+    const trackType = document.getElementById("trackType").value;
+    const event1 = document.getElementById("event1");
+    const event2 = document.getElementById("event2");
+    
+    // Clear existing options
+    event1.innerHTML = '<option value="">-- Select Event --</option>';
+    event2.innerHTML = '<option value="">-- Select Event --</option>';
+    
+    if (gender && trackType) {
+        const records = cdnRecords[trackType][gender];
+        for (const [key, value] of Object.entries(records)) {
+            const option1 = document.createElement("option");
+            option1.value = value.time;
+            option1.textContent = value.label;
+            event1.appendChild(option1);
+            
+            const option2 = document.createElement("option");
+            option2.value = value.time;
+            option2.textContent = value.label;
+            event2.appendChild(option2);
+        }
+    }
+}
 
 function determineLevel(percent) {
 
@@ -115,13 +206,16 @@ function calculate() {
     const standard1 = parseFloat(document.getElementById("event1").value);
     const standard2 = parseFloat(document.getElementById("event2").value);
 
-    if (isNaN(athlete1) || isNaN(athlete2)) {
+    if (isNaN(athlete1) || isNaN(athlete2) || !standard1 || !standard2) {
 
         document.getElementById("results").innerHTML =
-            "<p>Please enter both race times.</p>";
+            "<p>Please select gender, track type, events, and enter both race times.</p>";
 
         return;
     }
+
+    const event1Label = document.getElementById("event1").selectedOptions[0].text;
+    const event2Label = document.getElementById("event2").selectedOptions[0].text;
 
     const percent1 = (athlete1 / standard1) * 100;
     const percent2 = (athlete2 / standard2) * 100;
@@ -131,64 +225,317 @@ function calculate() {
     const level = determineLevel(cumulativePercent);
 
     document.getElementById("results").innerHTML = `
-        <h2>Results</h2>
+        <h3>Individual Calculations</h3>
 
-        <p><strong>Performance 1 Percentage:</strong>
-        ${percent1.toFixed(3)}%</p>
+        <p><strong>${event1Label}:</strong></p>
+        <p>${athlete1} ÷ ${standard1} × 100 = ${percent1.toFixed(3)}%</p>
 
-        <p><strong>Performance 2 Percentage:</strong>
-        ${percent2.toFixed(3)}%</p>
+        <p><strong>${event2Label}:</strong></p>
+        <p>${athlete2} ÷ ${standard2} × 100 = ${percent2.toFixed(3)}%</p>
 
-        <p><strong>Cumulative Average Percentage:</strong>
-        ${cumulativePercent.toFixed(3)}%</p>
+        <p><strong>Cumulative Average:</strong></p>
+        <p>(${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2 = ${cumulativePercent.toFixed(3)}%</p>
 
-        <p><strong>Team Level:</strong>
-        ${level}</p>
-
-        <h3>Calculation</h3>
-
-        <p>
-        (${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2
-        = ${cumulativePercent.toFixed(3)}%
-        </p>
+        <p><strong>Result: Team Level ${level}</strong></p>
     `;
 }
 
 function runExample() {
 
-    const athlete500 = 43.707;
-    const athlete1500 = 135.964;
-
-    const standard500 = 39.660;
-    const standard1500 = 126.565;
-
-    const percent500 = (athlete500 / standard500) * 100;
-    const percent1500 = (athlete1500 / standard1500) * 100;
-
-    const average = (percent500 + percent1500) / 2;
-
-    const level = determineLevel(average);
-
-    document.getElementById("exampleResult").innerHTML = `
-        <hr>
-
-        <h3>Example Calculation</h3>
-
-        <p>500m Percentage:
-        ${percent500.toFixed(3)}%</p>
-
-        <p>1500m Percentage:
-        ${percent1500.toFixed(3)}%</p>
-
-        <p>Cumulative Average:
-        ${average.toFixed(3)}%</p>
-
-        <p><strong>Result:
-        ${level}</strong></p>
-    `;
+    // Populate the calculator with example values
+    document.getElementById("gender").value = "male";
+    document.getElementById("trackType").value = "st";
+    
+    // Update event options based on gender and track type
+    updateEventOptions();
+    
+    // Set the event dropdowns to the standard values (39.66 for 500m, 126.57 for 1500m)
+    document.getElementById("event1").value = "39.66";
+    document.getElementById("event2").value = "126.57";
+    
+    // Set the athlete's times
+    document.getElementById("time1").value = "43.707";
+    document.getElementById("time2").value = "135.964";
 }
 
 </script>
+
+<hr>
+
+<h2>APPENDIX B: TIME STANDARDS (FOR USE IN 2025-2026)</h2>
+
+<p>
+Provincial Team qualification is based on the average percentage from any two (2) distances. Skaters are not
+required to have both distances under 115%.
+</p>
+
+<h3>Qualification Standards (% to be Under)</h3>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+  <tr style="background-color: #f0f0f0;">
+    <th colspan="5" style="text-align: center;">Female Standards</th>
+    <th style="background-color: #e0e0e0;">Team Level</th>
+    <th colspan="5" style="text-align: center;">Male Standards</th>
+  </tr>
+  <tr style="background-color: #f0f0f0;">
+    <th>500m</th>
+    <th>1000m</th>
+    <th>1500m</th>
+    <th>3000m</th>
+    <th>5000m</th>
+    <th style="background-color: #e0e0e0;"></th>
+    <th>500m</th>
+    <th>1000m</th>
+    <th>1500m</th>
+    <th>5000m</th>
+    <th>10000m</th>
+  </tr>
+  <tr>
+    <td>106%</td>
+    <td>106%</td>
+    <td>108%</td>
+    <td>108.5%</td>
+    <td>108.5%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">A1</td>
+    <td>106%</td>
+    <td>106%</td>
+    <td>106%</td>
+    <td>108%</td>
+    <td>108%</td>
+  </tr>
+  <tr>
+    <td>108%</td>
+    <td>108%</td>
+    <td>111%</td>
+    <td>111%</td>
+    <td>111%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">A2</td>
+    <td>108%</td>
+    <td>108%</td>
+    <td>108%</td>
+    <td>110%</td>
+    <td>110%</td>
+  </tr>
+  <tr>
+    <td>110%</td>
+    <td>111%</td>
+    <td>113%</td>
+    <td>113%</td>
+    <td>113%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">A3</td>
+    <td>110%</td>
+    <td>110%</td>
+    <td>110%</td>
+    <td>112%</td>
+    <td>112%</td>
+  </tr>
+  <tr>
+    <td>113%</td>
+    <td>114%</td>
+    <td>115%</td>
+    <td>116%</td>
+    <td>116%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">B1</td>
+    <td>113%</td>
+    <td>113%</td>
+    <td>113%</td>
+    <td>115%</td>
+    <td>115%</td>
+  </tr>
+  <tr>
+    <td>115%</td>
+    <td>116%</td>
+    <td>118%</td>
+    <td>119%</td>
+    <td>119%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">B2</td>
+    <td>115%</td>
+    <td>115%</td>
+    <td>115%</td>
+    <td>118%</td>
+    <td>118%</td>
+  </tr>
+  <tr>
+    <td>118%</td>
+    <td>120%</td>
+    <td>121%</td>
+    <td>122%</td>
+    <td>122%</td>
+    <td style="background-color: #e0e0e0; font-weight: bold; text-align: center;">Dev T</td>
+    <td>119%</td>
+    <td>119%</td>
+    <td>119%</td>
+    <td>121%</td>
+    <td>121%</td>
+  </tr>
+</table>
+
+<h3>Short Track Criteria</h3>
+
+<p>
+The selection is based on percentages of the Canadian senior record: 106% (A1), 108% (A2), 110% (A3),
+112% (B1) and 115% (B2). The Development Team standard is 115% of the Canadian Junior record. Skaters qualify
+using the average percentage of any two distances.
+</p>
+
+<h3>Long Track Criteria</h3>
+
+<p>
+The selection is based on the Olympic Oval A and B time standards. The Oval A Time for each distance will act as
+a midpoint for the model with three (3) time standards above the A standard (A1, A2, A3) and two (2) time
+standards between the A and B standards (B1, B2) and Development Team. Skaters qualify using the average
+percentage of any two distances.
+</p>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+  <tr style="background-color: #f0f0f0;">
+    <th>Gender</th>
+    <th>Distance (m)</th>
+    <th>A1 Team</th>
+    <th>A2 Team</th>
+    <th>A3 Team</th>
+    <th>B1 Team</th>
+    <th>B2 Team</th>
+    <th>Dev Team</th>
+  </tr>
+  <tr>
+    <td rowspan="5">Male</td>
+    <td>500</td>
+    <td>35.80</td>
+    <td>36.47</td>
+    <td>37.15</td>
+    <td>38.16</td>
+    <td>38.84</td>
+    <td>40.19</td>
+  </tr>
+  <tr>
+    <td>1000</td>
+    <td>1:10.72</td>
+    <td>1:12.06</td>
+    <td>1:13.39</td>
+    <td>1:15.39</td>
+    <td>1:16.73</td>
+    <td>1:19.40</td>
+  </tr>
+  <tr>
+    <td>1500</td>
+    <td>1:48.13</td>
+    <td>1:50.17</td>
+    <td>1:52.21</td>
+    <td>1:55.27</td>
+    <td>1:57.31</td>
+    <td>2:01.39</td>
+  </tr>
+  <tr>
+    <td>5000</td>
+    <td>6:30.80</td>
+    <td>6:38.05</td>
+    <td>6:45.28</td>
+    <td>6:56.14</td>
+    <td>7:07.00</td>
+    <td>7:17.85</td>
+  </tr>
+  <tr>
+    <td>10000</td>
+    <td>13:36.21</td>
+    <td>13:51.33</td>
+    <td>14:06.44</td>
+    <td>14:29.11</td>
+    <td>14:51.79</td>
+    <td>15:14.46</td>
+  </tr>
+  <tr>
+    <td rowspan="5">Female</td>
+    <td>500</td>
+    <td>39.45</td>
+    <td>40.20</td>
+    <td>40.94</td>
+    <td>42.06</td>
+    <td>42.80</td>
+    <td>43.92</td>
+  </tr>
+  <tr>
+    <td>1000</td>
+    <td>1:17.04</td>
+    <td>1:18.49</td>
+    <td>1:20.68</td>
+    <td>1:22.86</td>
+    <td>1:24.31</td>
+    <td>1:27.22</td>
+  </tr>
+  <tr>
+    <td>1500</td>
+    <td>2:00.70</td>
+    <td>2:04.05</td>
+    <td>2:06.29</td>
+    <td>2:08.52</td>
+    <td>2:11.88</td>
+    <td>2:15.23</td>
+  </tr>
+  <tr>
+    <td>3000</td>
+    <td>4:13.17</td>
+    <td>4:19.01</td>
+    <td>4:23.67</td>
+    <td>4:30.67</td>
+    <td>4:37.68</td>
+    <td>4:44.68</td>
+  </tr>
+  <tr>
+    <td>5000</td>
+    <td>7:21.39</td>
+    <td>7:31.56</td>
+    <td>7:39.70</td>
+    <td>7:51.90</td>
+    <td>8:04.10</td>
+    <td>8:16.31</td>
+  </tr>
+</table>
+
+<p style="margin-top: 20px; font-size: 0.9em; color: #666;">
+  <em>Revision Date: October, 2025</em>
+</p>
+
+<hr>
+
+<h2>3.4 Performance Levels</h2>
+
+<h3>3.4.1 Calculation Methodology</h3>
+
+<p>
+Percentages are calculated based on the average of an athlete's best two distances from the season. These two distances must be skated during the same season and may include any combination of official race distances (e.g., 500m, 1000m, or 1500m or twice in the same distance).
+</p>
+
+<p>
+To determine the percentage, the cumulative time of the two best distances is calculated and compared against the corresponding time standards. The resulting percentage represents the athlete's performance relative to the benchmark.
+</p>
+
+<p>
+This method is consistent with the approach used at the national level and ensures that Speed Skating Alberta's provincial criteria are aligned with national standards. See Appendix B for current season time standards.
+</p>
+
+<h3>Example Calculation</h3>
+
+<p>
+The appropriate way to calculate the cumulative time is given below using a male skater ('Skater A') who has a 500m time of 43.707 and a 1500m time of 2:15.964.
+</p>
+
+<ul>
+  <li><strong>Canadian ST Record times (see Appendix B):</strong> 500m (39.660); 1500m (2:06.565)</li>
+  <li><strong>Based on this information, the percentage levels reached are:</strong>
+    <ul>
+      <li>For the 500m is: 110.192%</li>
+      <li>For the 1500m is: 107.426%</li>
+    </ul>
+  </li>
+  <li><strong>Thus, the cumulative average is:</strong> (110.192 + 107.426)/2 = 108.809%</li>
+</ul>
+
+<p>
+<strong>Therefore, Skater A will qualify for the 2025-26 Provincial Team with a Team Level A3, as their cumulative percentage average is over 108% but less than 110%.</strong>
+</p>
+
+<hr>
 
 </body>
 </html>
