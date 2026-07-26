@@ -92,7 +92,7 @@
     </div>
 
     <div id="dobGroup" style="margin-bottom: 25px;">
-      <label style="display: block; font-size: 12px; margin-bottom: 5px; color: #555;"><strong>Date of Birth</strong> <span style="font-weight: normal; color: #999;">(used to determine development team eligibility)</span></label>
+      <label style="display: block; font-size: 12px; margin-bottom: 5px; color: #555;"><strong>Date of Birth</strong> <span style="font-weight: normal; color: #999;">(to determine team eligibility)</span></label>
       <input type="date" id="dob" style="width: 100%; padding: 8px; border: 1px solid #ddd; color: #333; font-size: 14px; font-family: Arial, sans-serif;">
     </div>
 
@@ -152,17 +152,13 @@
 
     <div id="results" style="margin-bottom: 15px;"></div>
 
-    <div style="background: #f5f5f5; padding: 15px; border-radius: 3px; border-top: 2px solid #199bff;">
-      <h3 style="color: #199bff; font-size: 14px; margin-bottom: 10px;">Example from Policy</h3>
-      <p style="font-size: 12px; color: #666; margin: 8px 0;">
-        <strong>Skater A:</strong>
-      </p>
-      <ul style="font-size: 12px; color: #666; margin: 8px 0 8px 20px;">
-        <li>500m = 43.707 s</li>
-        <li>1500m = 2:15.964</li>
-      </ul>
-      <p style="font-size: 11px; color: #999; margin: 10px 0;">Result: Team Level A3</p>
-      <button onclick="runExample()" style="background: #199bff; color: white; padding: 8px 12px; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; font-size: 12px; width: 100%; margin-top: 10px;">Run Example</button>
+    <div style="border: 2px solid #199bff; border-radius: 3px; padding: 15px; background: #f5f5f5;">
+      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Example from Policy</p>
+      <p style="font-size: 12px; color: #555; margin-bottom: 4px;"><strong style="color: #333;">Skater A</strong> — Male Short Track</p>
+      <p style="font-size: 12px; color: #555; margin-bottom: 2px;">500m = 43.707 s</p>
+      <p style="font-size: 12px; color: #555; margin-bottom: 8px;">1500m = 2:15.964</p>
+      <p style="font-size: 12px; color: #999; margin-bottom: 12px;">Expected result: Team Level A3</p>
+      <button onclick="runExample()" style="background: #199bff; color: white; padding: 8px 12px; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; font-size: 12px; width: 100%;">Run Example</button>
     </div>
     </div>
   </div>
@@ -545,9 +541,26 @@
     const standard1 = parseFloat(document.getElementById("event1").value);
     const standard2 = parseFloat(document.getElementById("event2").value);
     const trackType = document.getElementById("trackType").value;
+    const gender = document.getElementById("gender").value;
 
     if (isNaN(athlete1) || isNaN(athlete2) || !standard1 || !standard2) {
-      document.getElementById("results").innerHTML = "<p style='color: #d32f2f; font-weight: bold;'>Please select gender, track type, events, and enter both race times.</p>";
+      document.getElementById("results").innerHTML = `
+        <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px; background: #fff5f5;">
+          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 4px;">Breakdown</p>
+          <p style="font-size: 12px; color: #d32f2f;">Please enter all required information to see results.</p>
+        </div>
+        <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fff5f5;">
+          <div style="display: flex; gap: 16px;">
+            <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
+              <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
+              <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
+            </div>
+            <div style="flex: 1;">
+              <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
+              <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
+            </div>
+          </div>
+        </div>`;
       return;
     }
 
@@ -568,51 +581,82 @@
       const devEligible = isuClass && meetsDevStandard;
 
       if (!dob) {
-        devTeamHTML = `<div style="background: #f5f5f5; padding: 12px; border-radius: 3px; margin-top: 12px; border-left: 3px solid #bbb;">
-          <p style="font-size: 13px; color: #666;"><strong>Development Team:</strong> Enter date of birth to check eligibility.</p>
-        </div>`;
+        devTeamHTML = `
+          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
+            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
+            <p style="font-size: 12px; color: #999;">Enter date of birth to check eligibility.</p>
+          </div>`;
       } else if (!isuClass) {
-        devTeamHTML = `<div style="background: #fce4ec; padding: 12px; border-radius: 3px; margin-top: 12px; border-left: 3px solid #e57373;">
-          <p style="font-size: 13px; color: #c62828;"><strong>Development Team:</strong> Not age-eligible (must be ISU Junior A, B, or C2 — ages 14–18 before July 1, 2025).</p>
-        </div>`;
+        devTeamHTML = `
+          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
+            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
+            <p style="font-size: 12px; color: #d32f2f;">Not age-eligible — must be ISU Junior A, B, or C2 (ages 14–18 before July 1, 2025).</p>
+          </div>`;
       } else if (!meetsDevStandard) {
-        devTeamHTML = `<div style="background: #fce4ec; padding: 12px; border-radius: 3px; margin-top: 12px; border-left: 3px solid #e57373;">
-          <p style="font-size: 13px; color: #c62828;"><strong>Development Team:</strong> Age-eligible (${isuClass.ssc} / ${isuClass.isu}), but does not meet time standard (must be ≤ 115%).</p>
-        </div>`;
+        devTeamHTML = `
+          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
+            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
+            <p style="font-size: 12px; color: #d32f2f;">Age-eligible (${isuClass.ssc} / ${isuClass.isu}), but time standard not met (must be ≤ 115%).</p>
+          </div>`;
       } else {
-        devTeamHTML = `<div style="background: #e8f5e9; padding: 12px; border-radius: 3px; margin-top: 12px; border-left: 3px solid #43a047;">
-          <p style="font-size: 13px; color: #2e7d32;"><strong>Development Team:</strong> Eligible — ${isuClass.ssc} / ${isuClass.isu}, and meets time standard.</p>
-        </div>`;
+        devTeamHTML = `
+          <div style="border: 1px solid #199bff; border-radius: 3px; padding: 12px; margin-top: 10px; background: #f0f8ff;">
+            <p style="font-size: 12px; font-weight: bold; color: #199bff; margin-bottom: 2px;">Development Team</p>
+            <p style="font-size: 12px; color: #555;">Eligible — ${isuClass.ssc} / ${isuClass.isu}, time standard met.</p>
+          </div>`;
       }
     }
 
-    const levelDisplay = level ? `Team Level ${level}` : "Not Qualified";
+    const levelDisplay = level ? level : "Not Qualified";
     const levelColor = level ? "#199bff" : "#d32f2f";
 
+    let devTeamCell = "";
+    {
+      const dob = document.getElementById("dob").value;
+      const isuClass = getISUClassification(dob);
+      const meetsDevStandard = level !== null;
+      if (!dob) {
+        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#ccc; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">—</p><p style="font-size:11px; color:#999; margin-top:4px;">Enter date of birth above.</p>`;
+      } else if (!isuClass) {
+        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#d32f2f; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Ineligible</p><p style="font-size:11px; color:#999; margin-top:4px;">Not age-eligible (ages 14–18 before July 1, 2025).</p>`;
+      } else if (!meetsDevStandard) {
+        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#d32f2f; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Ineligible</p><p style="font-size:11px; color:#999; margin-top:4px;">Time standard not met (must be ≤ 115%).</p>`;
+      } else {
+        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#199bff; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Eligible</p><p style="font-size:11px; color:#999; margin-top:4px;">${isuClass.ssc} / ${isuClass.isu}</p>`;
+      }
+    }
+
     document.getElementById("results").innerHTML = `
-      <div style="background: #fff3e0; padding: 15px; border-radius: 3px; margin-bottom: 15px;">
-        <h3 style="color: #199bff; margin-bottom: 10px;">Individual Calculations</h3>
-        <p><strong>${event1Label}:</strong> ${athlete1} ÷ ${standard1} × 100 = ${percent1.toFixed(3)}%</p>
-        <p><strong>${event2Label}:</strong> ${athlete2} ÷ ${standard2} × 100 = ${percent2.toFixed(3)}%</p>
+      <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
+        <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Breakdown</p>
+        <p style="font-size: 12px; color: #555; margin-bottom: 4px;"><strong style="color: #333;">${event1Label}:</strong> ${athlete1}s ÷ ${standard1}s × 100 = <strong>${percent1.toFixed(3)}%</strong></p>
+        <p style="font-size: 12px; color: #555;"><strong style="color: #333;">${event2Label}:</strong> ${athlete2}s ÷ ${standard2}s × 100 = <strong>${percent2.toFixed(3)}%</strong></p>
+        <p style="font-size: 12px; color: #999; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee;">Average: (${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2 = <strong style="color: #555;">${cumulativePercent.toFixed(3)}%</strong></p>
       </div>
-      <div style="background: #fff3e0; padding: 15px; border-radius: 3px;">
-        <p style="margin-bottom: 8px;"><strong>Cumulative Average:</strong></p>
-        <p>(${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2 = ${cumulativePercent.toFixed(3)}%</p>
-        <p style="margin-top: 12px; font-size: 18px; font-weight: bold; color: ${levelColor};">Result: ${levelDisplay}</p>
-        ${devTeamHTML}
+      <div style="border: 2px solid ${level ? '#f5c842' : '#ddd'}; border-radius: 3px; padding: 15px; background: ${level ? '#fffef0' : '#fafafa'};">
+        <div style="display: flex; gap: 16px;">
+          <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
+            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
+            <p style="font-size: 28px; font-weight: 700; color: ${levelColor}; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">${levelDisplay}</p>
+            <p style="font-size: 11px; color: #999; margin-top: 4px;">${trackType === 'st' ? 'Short Track' : 'Long Track'} / ${gender.charAt(0).toUpperCase() + gender.slice(1)}</p>
+          </div>
+          <div style="flex: 1;">
+            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
+            ${devTeamCell}
+          </div>
+        </div>
       </div>
     `;
   }
 
   function runExample() {
-    document.getElementById("gender").value = "male";
-    document.getElementById("trackType").value = "st";
-    updateEventOptions();
+    selectGender("male");
+    selectTrack("st");
     document.getElementById("event1").value = "39.66";
     document.getElementById("event2").value = "126.57";
     if (document.getElementById("timeFormat").checked) {
-      document.getElementById("time1").value = "0:43.707";
-      document.getElementById("time2").value = "2:15.964";
+      populateSplitTime("time1", 43.707);
+      populateSplitTime("time2", 135.964);
     } else {
       document.getElementById("time1").value = "43.707";
       document.getElementById("time2").value = "135.964";
@@ -714,7 +758,26 @@
       return parseFloat(timeString);
     }
   }
+  selectGender('male');
   selectTrack('st');
+  document.getElementById("results").innerHTML = `
+    <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
+      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Breakdown</p>
+      <p style="font-size: 12px; color: #ccc;">Please enter all required information to see results.</p>
+    </div>
+    <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fafafa;">
+      <div style="display: flex; gap: 16px;">
+        <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
+          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
+          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
+        </div>
+        <div style="flex: 1;">
+          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
+          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
+        </div>
+      </div>
+    </div>
+  `;
 </script>
 
 </body>
