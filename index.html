@@ -74,7 +74,7 @@
     <div class="left-section-body">
 
     <div class="selector-group" style="margin-bottom: 20px;">
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555;">Gender</label>
+      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555;">Category</label>
       <div style="display: flex; gap: 8px;">
         <button type="button" id="btn-male" onclick="selectGender('male')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Male</button>
         <button type="button" id="btn-female" onclick="selectGender('female')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Female</button>
@@ -166,28 +166,84 @@
 
 <div class="appendix-wrapper" style="max-width: 1200px; margin: 0 auto;">
 <div id="appendixSection" style="margin: 15px 0 0; padding: 30px; background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-  <h2 id="appendixTitle" style="font-size: 28px; color: #199bff; margin-bottom: 10px; padding-bottom: 15px; border-bottom: 2px solid #199bff;">Qualification Rules</h2>
-  <p style="font-size: 13px; color: #666; margin-bottom: 30px;">For information see <a href="https://speedskatingalberta.ca/wp-content/uploads/2025/11/2025-26-AB-Provincial-Team-Criteria_FINAL.docx-2.pdf" style="color: #199bff; text-decoration: none; font-weight: bold;">2025-2026 Provincial Team Criteria (Appendix B)</a></p>
+  <h2 id="appendixTitle" style="font-size: 28px; color: #199bff; margin-bottom: 10px; padding-bottom: 15px; border-bottom: 2px solid #199bff; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px; font-weight: 400;">Qualification Rules</h2>
+  <p style="font-size: 13px; color: #666; margin-bottom: 30px;">For information see <a href="https://speedskatingalberta.ca/wp-content/uploads/2025/11/2025-26-AB-Provincial-Team-Criteria_FINAL.docx-2.pdf" style="color: #555; text-decoration: none; font-weight: bold;">2025-2026 Provincial Team Criteria (Appendix B)</a></p>
 
-  <div id="appendixDefault" style="text-align: center; padding: 40px; color: #999; font-size: 16px;">
-    Select a gender and track type above to view qualification standards
+  <div id="appendixDefault" style="text-align: center; padding: 40px; color: #ccc; font-size: 13px; font-family: Arial, sans-serif;">
+    Select a gender and discipline above to view qualification standards
   </div>
 
   <div id="appendixContent" style="display: none;">
-    <h3 id="stHeading" style="font-size: 18px; color: #333; margin-top: 30px; margin-bottom: 15px;">Qualification Standards (% to be Under)</h3>
+    <h3 id="stHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Qualification Standards</h3>
 
-    <table id="stTable" style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: white; font-size: 12px;">
+    <table id="stTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
     <tr style="background: #f0f0f0;">
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">Distance</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A3</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">B1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">B2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">Dev T</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A1</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A2</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A3</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B1</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B2</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Dev. Team</th>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">500m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
+    </tr>
+  </table>
+
+    <h3 id="stRecordsHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Canadian Records</h3>
+    <table id="stRecordsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
+      <tr style="background: #f0f0f0;">
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Distance</th>
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Canadian Record</th>
+      </tr>
+      <!-- Male rows -->
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">39.66</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:21.82</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:06.57</td>
+      </tr>
+      <!-- Female rows -->
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">41.94</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:27.47</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:16.64</td>
+      </tr>
+    </table>
+
+    <h3 id="ltHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Qualification Standards</h3>
+
+    <table id="ltTable" style="display: none; width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
+    <tr style="background: #f0f0f0;">
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Distance</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A1</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A2</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A3</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B1</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B2</th>
+      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Dev. Team</th>
+    </tr>
+    <!-- Male rows (idx 1–5) -->
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
@@ -196,7 +252,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
@@ -205,7 +261,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1500m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
@@ -214,7 +270,26 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">500m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">10000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
+    </tr>
+    <!-- Female rows (idx 6–10) -->
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
@@ -223,7 +298,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
@@ -232,7 +307,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">120%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1500m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
@@ -241,7 +316,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">3000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3000m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108.5%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
@@ -250,7 +325,7 @@
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">122%</td>
     </tr>
     <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">5000m</td>
+      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108.5%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
       <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
@@ -260,109 +335,55 @@
     </tr>
   </table>
 
-    <h3 id="ltHeading" style="font-size: 18px; color: #333; margin-top: 30px; margin-bottom: 15px;">Long Track Time Standards (Olympic Oval)</h3>
-
-    <table id="ltTable" style="display: none; width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; font-size: 12px;">
-    <tr style="background: #f0f0f0;">
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">Distance (m)</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A1 Team</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A2 Team</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">A3 Team</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">B1 Team</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">B2 Team</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd;">Development Team</th>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">500</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">35.80</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">36.47</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">37.15</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">38.16</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">38.84</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">40.19</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:10.72</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:12.06</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:13.39</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:15.39</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:16.73</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:19.40</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1500</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:48.13</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:50.17</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:52.21</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:55.27</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:57.31</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:01.39</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">5000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">6:30.80</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">6:38.05</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">6:45.28</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">6:56.14</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:07.00</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:17.85</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">10000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">13:36.21</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">13:51.33</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">14:06.44</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">14:29.11</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">14:51.79</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">15:14.46</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">500</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">39.45</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">40.20</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">40.94</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">42.06</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">42.80</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">43.92</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:17.04</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:18.49</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:20.68</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:22.86</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:24.31</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">1:27.22</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">1500</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:00.70</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:04.05</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:06.29</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:08.52</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:11.88</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">2:15.23</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">3000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:13.17</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:19.01</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:23.67</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:30.67</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:37.68</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">4:44.68</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd;">5000</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:21.39</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:31.56</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:39.70</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">7:51.90</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">8:04.10</td>
-      <td style="padding: 10px; border: 1px solid #ddd;">8:16.31</td>
-    </tr>
-  </table>
+    <h3 id="ltRecordsHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Canadian Records</h3>
+    <table id="ltRecordsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
+      <tr style="background: #f0f0f0;">
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Distance</th>
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Canadian Record</th>
+      </tr>
+      <!-- Male rows (idx 1–5) -->
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">33.77</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:06.72</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:42.01</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">6:01.85</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">10000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">12:35.75</td>
+      </tr>
+      <!-- Female rows (idx 6–10) -->
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">37.22</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:12.68</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:51.76</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3:53.38</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">6:46.82</td>
+      </tr>
+    </table>
   </div>
 </div>
 </div>
@@ -372,30 +393,30 @@
   const cdnRecords = {
     st: {
       male: {
-        "500": { time: 39.66, label: "500m (CDN REC: 39.66 s)" },
-        "1000": { time: 81.82, label: "1000m (CDN REC: 1:21.82)" },
-        "1500": { time: 126.57, label: "1500m (CDN REC: 2:06.57)" }
+        "500": { time: 39.66, label: "500m" },
+        "1000": { time: 81.82, label: "1000m" },
+        "1500": { time: 126.57, label: "1500m" }
       },
       female: {
-        "500": { time: 41.94, label: "500m (CDN REC: 41.94 s)" },
-        "1000": { time: 87.47, label: "1000m (CDN REC: 1:27.47)" },
-        "1500": { time: 136.64, label: "1500m (CDN REC: 2:16.64)" }
+        "500": { time: 41.94, label: "500m" },
+        "1000": { time: 87.47, label: "1000m" },
+        "1500": { time: 136.64, label: "1500m" }
       }
     },
     lt: {
       male: {
-        "500": { time: 35.80, label: "500m (OO: 35.80 s)" },
-        "1000": { time: 70.72, label: "1000m (OO: 1:10.72)" },
-        "1500": { time: 108.13, label: "1500m (OO: 1:48.13)" },
-        "5000": { time: 390.80, label: "5000m (OO: 6:30.80)" },
-        "10000": { time: 816.21, label: "10000m (OO: 13:36.21)" }
+        "500": { time: 35.80, label: "500m" },
+        "1000": { time: 70.72, label: "1000m" },
+        "1500": { time: 108.13, label: "1500m" },
+        "5000": { time: 390.80, label: "5000m" },
+        "10000": { time: 816.21, label: "10000m" }
       },
       female: {
-        "500": { time: 39.45, label: "500m (OO: 39.45 s)" },
-        "1000": { time: 77.04, label: "1000m (OO: 1:17.04)" },
-        "1500": { time: 120.70, label: "1500m (OO: 2:00.70)" },
-        "3000": { time: 253.17, label: "3000m (OO: 4:13.17)" },
-        "5000": { time: 441.39, label: "5000m (OO: 7:21.39)" }
+        "500": { time: 39.45, label: "500m" },
+        "1000": { time: 77.04, label: "1000m" },
+        "1500": { time: 120.70, label: "1500m" },
+        "3000": { time: 253.17, label: "3000m" },
+        "5000": { time: 441.39, label: "5000m" }
       }
     }
   };
@@ -475,7 +496,7 @@
     const genderLabel = gender === "male" ? "Male" : "Female";
     const trackLabel = trackType === "st" ? "Short Track" : "Long Track";
 
-    document.getElementById("appendixTitle").textContent = `APPENDIX B: ${genderLabel.toUpperCase()} - ${trackLabel.toUpperCase()} STANDARDS`;
+    document.getElementById("appendixTitle").textContent = `Criteria: ${trackLabel} — ${genderLabel}`;
     document.getElementById("appendixDefault").style.display = "none";
     document.getElementById("appendixContent").style.display = "block";
 
@@ -484,21 +505,21 @@
       document.getElementById("ltHeading").style.display = "none";
       document.getElementById("stTable").style.display = "table";
       document.getElementById("ltTable").style.display = "none";
+      document.getElementById("stRecordsHeading").style.display = "block";
+      document.getElementById("stRecordsTable").style.display = "table";
+      document.getElementById("ltRecordsHeading").style.display = "none";
+      document.getElementById("ltRecordsTable").style.display = "none";
 
-      // ST table: Hide male (rows 1-3) or female (rows 4-8) rows
-      const stTable = document.getElementById("stTable");
-      const rows = stTable.querySelectorAll("tr");
-
-      rows.forEach((row, idx) => {
+      // ST records table: rows 1=male header, 2-4=male data, 5=female header, 6-8=female data
+      const stRecordsTable = document.getElementById("stRecordsTable");
+      const recRows = stRecordsTable.querySelectorAll("tr");
+      recRows.forEach((row, idx) => {
         if (idx === 0) {
-          // Header row - always show
-          row.style.display = "table-row";
+          row.style.display = "table-row"; // column headers
         } else if (idx <= 3) {
-          // Male rows (1-3: 500m, 1000m, 1500m)
-          row.style.display = gender === "male" ? "table-row" : "none";
+          row.style.display = gender === "male" ? "table-row" : "none"; // male 500/1000/1500
         } else {
-          // Female rows (4-8: 500m, 1000m, 1500m, 3000m, 5000m)
-          row.style.display = gender === "female" ? "table-row" : "none";
+          row.style.display = gender === "female" ? "table-row" : "none"; // female header + 3 distances
         }
       });
     } else {
@@ -506,6 +527,23 @@
       document.getElementById("ltHeading").style.display = "block";
       document.getElementById("stTable").style.display = "none";
       document.getElementById("ltTable").style.display = "table";
+      document.getElementById("stRecordsHeading").style.display = "none";
+      document.getElementById("stRecordsTable").style.display = "none";
+      document.getElementById("ltRecordsHeading").style.display = "block";
+      document.getElementById("ltRecordsTable").style.display = "table";
+
+      // LT records table: rows 1–5 male, rows 6–10 female
+      const ltRecordsTable = document.getElementById("ltRecordsTable");
+      const ltRecRows = ltRecordsTable.querySelectorAll("tr");
+      ltRecRows.forEach((row, idx) => {
+        if (idx === 0) {
+          row.style.display = "table-row";
+        } else if (idx <= 5) {
+          row.style.display = gender === "male" ? "table-row" : "none";
+        } else {
+          row.style.display = gender === "female" ? "table-row" : "none";
+        }
+      });
 
       // LT table: Hide male (rows 1-5) or female (rows 6-10) rows
       const ltTable = document.getElementById("ltTable");
