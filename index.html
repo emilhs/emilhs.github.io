@@ -195,37 +195,45 @@
     </tr>
   </table>
 
+    <p style="font-size: 11px; color: #999; margin: 8px 0 16px;">Development team age eligibility: ISU Junior classification (age categories 14–18).</p>
     <h3 id="stRecordsHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Canadian Records</h3>
     <table id="stRecordsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
       <tr style="background: #f0f0f0;">
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Distance</th>
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Canadian Record</th>
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Distance</th>
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Canadian Record</th>
+        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Canadian Junior Record</th>
       </tr>
       <!-- Male rows -->
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">39.66</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">40.24</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:21.82</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:24.05</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:06.57</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:12.70</td>
       </tr>
       <!-- Female rows -->
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">41.94</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">42.92</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:27.47</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:28.38</td>
       </tr>
       <tr>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
         <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:16.64</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:23.53</td>
       </tr>
     </table>
 
@@ -393,31 +401,49 @@
   const cdnRecords = {
     st: {
       male: {
-        "500": { time: 39.66, label: "500m" },
-        "1000": { time: 81.82, label: "1000m" },
+        "500":  { time: 39.66,  label: "500m" },
+        "1000": { time: 81.82,  label: "1000m" },
         "1500": { time: 126.57, label: "1500m" }
       },
       female: {
-        "500": { time: 41.94, label: "500m" },
-        "1000": { time: 87.47, label: "1000m" },
+        "500":  { time: 41.94,  label: "500m" },
+        "1000": { time: 87.47,  label: "1000m" },
         "1500": { time: 136.64, label: "1500m" }
       }
     },
     lt: {
+      // Reference times are CDN Records (back-calculated from A1 standard ÷ A1%)
       male: {
-        "500": { time: 35.80, label: "500m" },
-        "1000": { time: 70.72, label: "1000m" },
-        "1500": { time: 108.13, label: "1500m" },
-        "5000": { time: 390.80, label: "5000m" },
-        "10000": { time: 816.21, label: "10000m" }
+        "500":   { time: 33.77,  label: "500m" },
+        "1000":  { time: 66.72,  label: "1000m" },
+        "1500":  { time: 102.01, label: "1500m" },
+        "5000":  { time: 361.85, label: "5000m" },
+        "10000": { time: 755.75, label: "10000m" }
       },
       female: {
-        "500": { time: 39.45, label: "500m" },
-        "1000": { time: 77.04, label: "1000m" },
-        "1500": { time: 120.70, label: "1500m" },
-        "3000": { time: 253.17, label: "3000m" },
-        "5000": { time: 441.39, label: "5000m" }
+        "500":  { time: 37.22,  label: "500m" },
+        "1000": { time: 72.68,  label: "1000m" },
+        "1500": { time: 111.76, label: "1500m" },
+        "3000": { time: 233.38, label: "3000m" },
+        "5000": { time: 406.82, label: "5000m" }
       }
+    }
+  };
+
+  // CDN Junior ISU Records — used as the reference for Dev Team eligibility (ST only)
+  const jrRecords = {
+    st: {
+      male:   { "500": 40.24, "1000": 84.05, "1500": 132.70 },
+      female: { "500": 42.92, "1000": 88.38, "1500": 143.53 }
+    }
+  };
+
+  // Dev Team time thresholds by discipline/gender/event (as a multiplier of the reference)
+  const devThresholds = {
+    st: { male: 1.15, female: 1.15 }, // 115% of CDN Jr ISU Rec
+    lt: {
+      male:   { "500": 1.19, "1000": 1.19, "1500": 1.19, "5000": 1.21, "10000": 1.21 },
+      female: { "500": 1.18, "1000": 1.20, "1500": 1.21, "3000": 1.22, "5000": 1.22 }
     }
   };
 
@@ -456,12 +482,12 @@
       const records = cdnRecords[trackType][gender];
       for (const [key, value] of Object.entries(records)) {
         const option1 = document.createElement("option");
-        option1.value = value.time;
+        option1.value = key;
         option1.textContent = value.label;
         event1.appendChild(option1);
 
         const option2 = document.createElement("option");
-        option2.value = value.time;
+        option2.value = key;
         option2.textContent = value.label;
         event2.appendChild(option2);
       }
@@ -576,10 +602,12 @@
   function calculate() {
     const athlete1 = getTimeInSeconds(document.getElementById("time1").value);
     const athlete2 = getTimeInSeconds(document.getElementById("time2").value);
-    const standard1 = parseFloat(document.getElementById("event1").value);
-    const standard2 = parseFloat(document.getElementById("event2").value);
     const trackType = document.getElementById("trackType").value;
     const gender = document.getElementById("gender").value;
+    const event1Key = document.getElementById("event1").value;
+    const event2Key = document.getElementById("event2").value;
+    const standard1 = event1Key ? cdnRecords[trackType][gender][event1Key].time : NaN;
+    const standard2 = event2Key ? cdnRecords[trackType][gender][event2Key].time : NaN;
 
     if (isNaN(athlete1) || isNaN(athlete2) || !standard1 || !standard2) {
       document.getElementById("results").innerHTML = `
@@ -588,16 +616,8 @@
           <p style="font-size: 12px; color: #d32f2f;">Please enter all required information to see results.</p>
         </div>
         <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fff5f5;">
-          <div style="display: flex; gap: 16px;">
-            <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
-              <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
-              <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-            </div>
-            <div style="flex: 1;">
-              <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
-              <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-            </div>
-          </div>
+          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
+          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
         </div>`;
       return;
     }
@@ -610,59 +630,36 @@
     const cumulativePercent = (percent1 + percent2) / 2;
     const level = determineLevel(cumulativePercent);
 
-    // Development Team eligibility
-    let devTeamHTML = "";
-    {
-      const dob = document.getElementById("dob").value;
-      const isuClass = getISUClassification(dob);
-      const meetsDevStandard = level !== null; // B2 or better meets the time standard
-      const devEligible = isuClass && meetsDevStandard;
-
-      if (!dob) {
-        devTeamHTML = `
-          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
-            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
-            <p style="font-size: 12px; color: #999;">Enter date of birth to check eligibility.</p>
-          </div>`;
-      } else if (!isuClass) {
-        devTeamHTML = `
-          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
-            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
-            <p style="font-size: 12px; color: #d32f2f;">Not age-eligible — must be ISU Junior A, B, or C2 (ages 14–18 before July 1, 2025).</p>
-          </div>`;
-      } else if (!meetsDevStandard) {
-        devTeamHTML = `
-          <div style="border: 1px solid #ddd; border-radius: 3px; padding: 12px; margin-top: 10px;">
-            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 2px;">Development Team</p>
-            <p style="font-size: 12px; color: #d32f2f;">Age-eligible (${isuClass.ssc} / ${isuClass.isu}), but time standard not met (must be ≤ 115%).</p>
-          </div>`;
-      } else {
-        devTeamHTML = `
-          <div style="border: 1px solid #199bff; border-radius: 3px; padding: 12px; margin-top: 10px; background: #f0f8ff;">
-            <p style="font-size: 12px; font-weight: bold; color: #199bff; margin-bottom: 2px;">Development Team</p>
-            <p style="font-size: 12px; color: #555;">Eligible — ${isuClass.ssc} / ${isuClass.isu}, time standard met.</p>
-          </div>`;
-      }
+    // Dev Team time standard check (separate reference from provincial team)
+    let meetsDevStandard = false;
+    if (trackType === "st") {
+      const jrStd1 = jrRecords.st[gender][event1Key];
+      const jrStd2 = jrRecords.st[gender][event2Key];
+      const devPct1 = (athlete1 / jrStd1) * 100;
+      const devPct2 = (athlete2 / jrStd2) * 100;
+      const devAvg = (devPct1 + devPct2) / 2;
+      meetsDevStandard = devAvg <= (devThresholds.st[gender] * 100);
+    } else {
+      const thresh1 = devThresholds.lt[gender][event1Key] * 100;
+      const thresh2 = devThresholds.lt[gender][event2Key] * 100;
+      meetsDevStandard = percent1 <= thresh1 && percent2 <= thresh2;
     }
 
-    const levelDisplay = level ? level : "Not Qualified";
-    const levelColor = level ? "#199bff" : "#d32f2f";
+    const dob = document.getElementById("dob").value;
+    const isuClass = getISUClassification(dob);
+    const devEligible = isuClass && meetsDevStandard;
 
-    let devTeamCell = "";
-    {
-      const dob = document.getElementById("dob").value;
-      const isuClass = getISUClassification(dob);
-      const meetsDevStandard = level !== null;
-      if (!dob) {
-        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#ccc; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">—</p><p style="font-size:11px; color:#999; margin-top:4px;">Enter date of birth above.</p>`;
-      } else if (!isuClass) {
-        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#d32f2f; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Ineligible</p><p style="font-size:11px; color:#999; margin-top:4px;">Not age-eligible (ages 14–18 before July 1, 2025).</p>`;
-      } else if (!meetsDevStandard) {
-        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#d32f2f; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Ineligible</p><p style="font-size:11px; color:#999; margin-top:4px;">Time standard not met (must be ≤ 115%).</p>`;
-      } else {
-        devTeamCell = `<p style="font-size:28px; font-weight:700; color:#199bff; font-family:'Bebas Neue',Arial,sans-serif; letter-spacing:1px;">Eligible</p><p style="font-size:11px; color:#999; margin-top:4px;">${isuClass.ssc} / ${isuClass.isu}</p>`;
-      }
-    }
+    // Single outcome: provincial level takes priority, then Dev. Team, then Not Qualified
+    const finalLevel = level ? level : (devEligible ? "Dev. Team" : null);
+    const qualified = finalLevel !== null;
+    const finalDisplay = finalLevel ?? "Not Qualified";
+    const finalColor = qualified ? "#199bff" : "#c0625a";
+
+    const disciplineLabel = trackType === 'st' ? 'Short Track' : 'Long Track';
+    const genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
+    let subtitle = `${disciplineLabel} / ${genderLabel}`;
+    if (dob && isuClass) subtitle += ` · ${isuClass.ssc} / ${isuClass.isu}`;
+    else if (!dob && !level) subtitle += ` · Enter date of birth for Dev. Team eligibility`;
 
     document.getElementById("results").innerHTML = `
       <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
@@ -671,18 +668,10 @@
         <p style="font-size: 12px; color: #555;"><strong style="color: #333;">${event2Label}:</strong> ${athlete2}s ÷ ${standard2}s × 100 = <strong>${percent2.toFixed(3)}%</strong></p>
         <p style="font-size: 12px; color: #999; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee;">Average: (${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2 = <strong style="color: #555;">${cumulativePercent.toFixed(3)}%</strong></p>
       </div>
-      <div style="border: 2px solid ${level ? '#f5c842' : '#ddd'}; border-radius: 3px; padding: 15px; background: ${level ? '#fffef0' : '#fafafa'};">
-        <div style="display: flex; gap: 16px;">
-          <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
-            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
-            <p style="font-size: 28px; font-weight: 700; color: ${levelColor}; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">${levelDisplay}</p>
-            <p style="font-size: 11px; color: #999; margin-top: 4px;">${trackType === 'st' ? 'Short Track' : 'Long Track'} / ${gender.charAt(0).toUpperCase() + gender.slice(1)}</p>
-          </div>
-          <div style="flex: 1;">
-            <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
-            ${devTeamCell}
-          </div>
-        </div>
+      <div style="border: 2px solid ${qualified ? '#f5c842' : '#ddd'}; border-radius: 3px; padding: 15px; background: ${qualified ? '#fffef0' : '#fafafa'};">
+        <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
+        <p style="font-size: 28px; font-weight: 700; color: ${finalColor}; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">${finalDisplay}</p>
+        <p style="font-size: 11px; color: #999; margin-top: 4px;">${subtitle}</p>
       </div>
     `;
   }
@@ -690,8 +679,8 @@
   function runExample() {
     selectGender("male");
     selectTrack("st");
-    document.getElementById("event1").value = "39.66";
-    document.getElementById("event2").value = "126.57";
+    document.getElementById("event1").value = "500";
+    document.getElementById("event2").value = "1500";
     if (document.getElementById("timeFormat").checked) {
       populateSplitTime("time1", 43.707);
       populateSplitTime("time2", 135.964);
@@ -804,16 +793,8 @@
       <p style="font-size: 12px; color: #ccc;">Please enter all required information to see results.</p>
     </div>
     <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fafafa;">
-      <div style="display: flex; gap: 16px;">
-        <div style="flex: 1; border-right: 1px solid #ddd; padding-right: 16px;">
-          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Provincial Team Result</p>
-          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-        </div>
-        <div style="flex: 1;">
-          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Development Team Eligibility</p>
-          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-        </div>
-      </div>
+      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
+      <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
     </div>
   `;
 </script>
