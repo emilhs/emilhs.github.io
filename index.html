@@ -659,7 +659,7 @@
     const genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
     let subtitle = `${disciplineLabel} / ${genderLabel}`;
     if (dob && isuClass) subtitle += ` · ${isuClass.ssc} / ${isuClass.isu}`;
-    else if (!dob && !level) subtitle += ` · Enter date of birth for Dev. Team eligibility`;
+    else if (!dob && !level) subtitle += ` · Enter date of birth for development team eligibility`;
 
     document.getElementById("results").innerHTML = `
       <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
