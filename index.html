@@ -1,803 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Speed Skating Rankings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emil Hodzic-Santor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; font-size: 14px; line-height: 1.5; }
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --select: #000080; /* classic Windows selection navy */
+      --select-fg: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0e0e;
+        --fg: #f2f2f2;
+      }
+    }
 
-    .header { background: white; padding: 30px 40px; border-bottom: 3px solid #199bff; margin-bottom: 20px; text-align: center; }
-    .header h1 { font-size: 36px; color: #199bff; font-weight: 300; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 2px; }
-    .header p { color: #666; margin-top: 5px; font-size: 14px; }
-    .header-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 14px; }
-    .header-buttons a { font-size: 12px; font-weight: normal; text-decoration: none; font-family: Arial, sans-serif; color: #aaa; }
-    .header-buttons a:hover { color: #199bff; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8vh 16px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    .container { display: flex; gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 40px 15px; }
+    h1 {
+      font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(2rem, 9vw, 8rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin: 0 0 9vh;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
 
-    .left-section { flex: 35%; background: white; position: sticky; top: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
-    .banner-wrap { position: relative; }
-    .left-section-banner { width: 100%; height: 200px; object-fit: cover; display: block; }
-    #disciplineBanner { object-position: 60% 30%; }
-    .banner-title { position: absolute; bottom: 16px; left: 16px; right: 16px; text-align: center; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.7); color: white; font-size: 26px; font-weight: 600; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.2); font-family: 'Bebas Neue', Arial, sans-serif; }
-    .left-section-body { padding: 30px; }
-    .right-section { flex: 65%; background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
-    .right-section-body { padding: 30px; }
+    .desktop {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: center;
+      gap: 24px 16px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+    }
 
-    .section-title { font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.3px; font-family: 'Bebas Neue', Arial, sans-serif; }
-    .left-section .section-title { color: white; }
-    .right-section .section-title { color: #199bff; }
-    .section-subtitle { font-size: 13px; margin-bottom: 25px; color: #999; }
-    .left-section .section-subtitle { color: rgba(255,255,255,0.85); }
-    .right-section .section-subtitle { color: #999; }
+    @media (max-width: 600px) {
+      .desktop { grid-template-columns: repeat(2, auto); }
+    }
 
-    .selector-group { margin-bottom: 25px; }
-    .selector-label { font-size: 11px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.2); padding: 8px; }
+    .icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 120px;
+      text-decoration: none;
+      color: var(--fg);
+      outline: none;
+      cursor: default;
+    }
+    .icon svg {
+      width: 64px;
+      height: 52px;
+      margin-bottom: 8px;
+      shape-rendering: crispEdges;
+    }
+    .icon span {
+      font-family: Tahoma, Verdana, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.2;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      padding: 1px 4px;
+      border: 1px dotted transparent;
+    }
 
-    input, select { width: 100%; padding: 8px; border: 1px solid #ddd; font-size: 14px; font-family: Arial, sans-serif; }
-    button { padding: 10px; border: none; background: #199bff; color: white; cursor: pointer; font-weight: 600; font-size: 14px; width: 100%; font-family: Arial, sans-serif; }
-    button:hover { background: #1080d0; }
-
-    .hidden { display: none; }
-
-    .appendix-wrapper { padding: 0 40px; }
-
-    @media (max-width: 900px) {
-      .container { flex-direction: column; gap: 15px; padding: 0 20px 0; }
-      .appendix-wrapper { padding: 0 20px; }
-      .left-section { position: static; flex: 1; margin-bottom: 0; }
-      .right-section { flex: 1; }
-      .header { padding: 20px; }
+    /* Win9x-style selection: dithered navy over the icon, navy label */
+    .dither { display: none; }
+    .icon.selected .dither,
+    .icon:focus-visible .dither { display: inline; }
+    .icon.selected span,
+    .icon:focus-visible span {
+      background: var(--select);
+      color: var(--select-fg);
+      border-color: #ffff00;
+    }
+    .cv {
+      margin-top: 7vh;
+      font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+      font-size: 0.95rem;
+      color: var(--fg);
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-
-<div class="header">
-  <h1>SSA Provincial Team Calculator</h1>
-<div class="header-buttons">
-    <a href="https://speedskatingalberta.ca" class="header-btn-primary" target="_blank">Return to SSA Main Page</a>
-    <span style="color: #ccc;">·</span>
-    <a href="https://results.speedskatingalberta.ca" class="header-btn-secondary" target="_blank">Go to Results Database</a>
-  </div>
-</div>
-
-<div class="container">
-  <div class="left-section">
-    <div class="banner-wrap">
-      <img src="menuphoto.jpg" class="left-section-banner" alt="Speed skating">
-      <span class="banner-title">Athlete Information</span>
-    </div>
-    <div class="left-section-body">
-
-    <div class="selector-group" style="margin-bottom: 20px;">
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555;">Category</label>
-      <div style="display: flex; gap: 8px;">
-        <button type="button" id="btn-male" onclick="selectGender('male')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Male</button>
-        <button type="button" id="btn-female" onclick="selectGender('female')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Female</button>
-      </div>
-      <input type="hidden" id="gender">
-    </div>
-
-    <div class="selector-group" style="margin-bottom: 20px;">
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #555;">Discipline</label>
-      <div style="display: flex; gap: 8px;">
-        <button type="button" id="btn-st" onclick="selectTrack('st')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Short Track</button>
-        <button type="button" id="btn-lt" onclick="selectTrack('lt')" style="flex: 1; padding: 9px; border: 2px solid #ddd; background: #f5f5f5; color: #333; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;">Long Track</button>
-      </div>
-      <input type="hidden" id="trackType">
-    </div>
-
-    <div id="dobGroup" style="margin-bottom: 25px;">
-      <label style="display: block; font-size: 12px; margin-bottom: 5px; color: #555;"><strong>Date of Birth</strong> <span style="font-weight: normal; color: #999;">(to determine team eligibility)</span></label>
-      <input type="date" id="dob" style="width: 100%; padding: 8px; border: 1px solid #ddd; color: #333; font-size: 14px; font-family: Arial, sans-serif;">
-    </div>
-
-    <div style="margin-bottom: 20px; padding: 10px; background: #f5f5f5; border-radius: 3px;">
-      <label style="display: flex; align-items: center; font-size: 12px; color: #555; cursor: pointer;">
-        <input type="checkbox" id="timeFormat" onchange="toggleTimeFormat()" style="margin-right: 8px; width: 14px; height: 14px; cursor: pointer;">
-        <span><strong>Use min:sec format</strong> <span style="font-weight: normal; color: #999;">(2:15.964)</span></span>
-      </label>
-    </div>
-
-    <div style="margin-bottom: 12px;">
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #199bff;">Performance 1</label>
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555;">Event</label>
-      <select id="event1" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; margin-bottom: 10px; color: #333;">
-        <option value="">-- Select Event --</option>
-      </select>
-
-      <label style="display: block; font-size: 12px; margin-bottom: 5px; color: #555;"><strong>Time</strong> <span style="font-weight: normal; color: #999;">(seconds)</span></label>
-      <input type="number" id="time1" step="0.001" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; color: #333;" class="time-single">
-      <div id="time1-split" class="time-split" style="display: none; gap: 4px; align-items: center; width: 100%;">
-        <input type="number" id="time1-min" min="0" max="59" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="00" onchange="syncTime1()">
-        <span style="color: #333; font-weight: bold;">:</span>
-        <input type="number" id="time1-sec" min="0" max="59" step="1" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="00" onchange="syncTime1()">
-        <span style="color: #333; font-weight: bold;">.</span>
-        <input type="number" id="time1-ms" min="0" max="999" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="000" onchange="syncTime1()">
-      </div>
-    </div>
-
-    <div style="margin-bottom: 25px;">
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 8px; color: #199bff;">Performance 2</label>
-      <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555;">Event</label>
-      <select id="event2" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; margin-bottom: 10px; color: #333;">
-        <option value="">-- Select Event --</option>
-      </select>
-
-      <label style="display: block; font-size: 12px; margin-bottom: 5px; color: #555;"><strong>Time</strong> <span style="font-weight: normal; color: #999;">(seconds)</span></label>
-      <input type="number" id="time2" step="0.001" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; color: #333;" class="time-single">
-      <div id="time2-split" class="time-split" style="display: none; gap: 4px; align-items: center; width: 100%;">
-        <input type="number" id="time2-min" min="0" max="59" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="00" onchange="syncTime2()">
-        <span style="color: #333; font-weight: bold;">:</span>
-        <input type="number" id="time2-sec" min="0" max="59" step="1" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="00" onchange="syncTime2()">
-        <span style="color: #333; font-weight: bold;">.</span>
-        <input type="number" id="time2-ms" min="0" max="999" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 3px; text-align: center; color: #333;" placeholder="000" onchange="syncTime2()">
-      </div>
-    </div>
-
-    <button onclick="calculate()" style="background: #199bff; color: white; padding: 12px; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; font-size: 14px; width: 100%; margin-bottom: 0;">Calculate</button>
-    </div>
-  </div>
-
-  <div class="right-section">
-    <div class="banner-wrap">
-      <img id="disciplineBanner" src="" class="left-section-banner" alt="Discipline" style="display: none;">
-      <span class="banner-title" id="resultBannerTitle" style="display: none;">Result</span>
-    </div>
-    <div class="right-section-body">
-
-    <div id="results" style="margin-bottom: 15px;"></div>
-
-    <div style="border: 2px solid #199bff; border-radius: 3px; padding: 15px; background: #f5f5f5;">
-      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Example from Policy</p>
-      <p style="font-size: 12px; color: #555; margin-bottom: 4px;"><strong style="color: #333;">Skater A</strong> — Male Short Track</p>
-      <p style="font-size: 12px; color: #555; margin-bottom: 2px;">500m = 43.707 s</p>
-      <p style="font-size: 12px; color: #555; margin-bottom: 8px;">1500m = 2:15.964</p>
-      <p style="font-size: 12px; color: #999; margin-bottom: 12px;">Expected result: Team Level A3</p>
-      <button onclick="runExample()" style="background: #199bff; color: white; padding: 8px 12px; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; font-size: 12px; width: 100%;">Run Example</button>
-    </div>
-    </div>
-  </div>
-</div>
-
-<div class="appendix-wrapper" style="max-width: 1200px; margin: 0 auto;">
-<div id="appendixSection" style="margin: 15px 0 0; padding: 30px; background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-  <h2 id="appendixTitle" style="font-size: 28px; color: #199bff; margin-bottom: 10px; padding-bottom: 15px; border-bottom: 2px solid #199bff; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px; font-weight: 400;">Qualification Rules</h2>
-  <p style="font-size: 13px; color: #666; margin-bottom: 30px;">For information see <a href="https://speedskatingalberta.ca/wp-content/uploads/2025/11/2025-26-AB-Provincial-Team-Criteria_FINAL.docx-2.pdf" style="color: #555; text-decoration: none; font-weight: bold;">2025-2026 Provincial Team Criteria (Appendix B)</a></p>
-
-  <div id="appendixDefault" style="text-align: center; padding: 40px; color: #ccc; font-size: 13px; font-family: Arial, sans-serif;">
-    Select a gender and discipline above to view qualification standards
-  </div>
-
-  <div id="appendixContent" style="display: none;">
-    <h3 id="stHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Qualification Standards</h3>
-
-    <table id="stTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
-    <tr style="background: #f0f0f0;">
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A3</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Dev. Team</th>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-    </tr>
-  </table>
-
-    <p style="font-size: 11px; color: #999; margin: 8px 0 16px;">Development team age eligibility: ISU Junior classification (age categories 14–18).</p>
-    <h3 id="stRecordsHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Canadian Records</h3>
-    <table id="stRecordsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
-      <tr style="background: #f0f0f0;">
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Distance</th>
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Canadian Record</th>
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 33%;">Canadian Junior Record</th>
-      </tr>
-      <!-- Male rows -->
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">39.66</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">40.24</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:21.82</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:24.05</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:06.57</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:12.70</td>
-      </tr>
-      <!-- Female rows -->
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">41.94</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">42.92</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:27.47</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:28.38</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:16.64</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">2:23.53</td>
-      </tr>
-    </table>
-
-    <h3 id="ltHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Qualification Standards</h3>
-
-    <table id="ltTable" style="display: none; width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
-    <tr style="background: #f0f0f0;">
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Distance</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">A3</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B1</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">B2</th>
-      <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center;">Dev. Team</th>
-    </tr>
-    <!-- Male rows (idx 1–5) -->
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">10000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">112%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
-    </tr>
-    <!-- Female rows (idx 6–10) -->
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">110%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">106%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">114%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">116%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">120%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">115%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">118%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">121%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108.5%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">116%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">122%</td>
-    </tr>
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">108.5%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">111%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">113%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">116%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">119%</td>
-      <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">122%</td>
-    </tr>
-  </table>
-
-    <h3 id="ltRecordsHeading" style="font-size: 12px; color: #199bff; margin-top: 20px; margin-bottom: 8px; font-family: Arial, sans-serif; font-weight: bold;">Canadian Records</h3>
-    <table id="ltRecordsTable" style="width: 100%; border-collapse: collapse; margin-bottom: 10px; background: white; font-size: 12px;">
-      <tr style="background: #f0f0f0;">
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Distance</th>
-        <th style="padding: 12px; font-weight: bold; border: 1px solid #ddd; text-align: center; width: 50%;">Canadian Record</th>
-      </tr>
-      <!-- Male rows (idx 1–5) -->
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">33.77</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:06.72</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:42.01</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">6:01.85</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">10000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">12:35.75</td>
-      </tr>
-      <!-- Female rows (idx 6–10) -->
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">37.22</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:12.68</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1500m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">1:51.76</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">3:53.38</td>
-      </tr>
-      <tr>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">5000m</td>
-        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">6:46.82</td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-<p style="text-align: center; font-size: 12px; color: #999; margin: 20px 0 30px;">Emil Hodzic-Santor for Speed Skating Alberta (2026) &nbsp;·&nbsp; Photo Credits: <a href="https://www.luvcanphotography.com" target="_blank" style="color: #999; text-decoration: none;">LuvCan Photography</a></p>
-
-<script>
-  const cdnRecords = {
-    st: {
-      male: {
-        "500":  { time: 39.66,  label: "500m" },
-        "1000": { time: 81.82,  label: "1000m" },
-        "1500": { time: 126.57, label: "1500m" }
-      },
-      female: {
-        "500":  { time: 41.94,  label: "500m" },
-        "1000": { time: 87.47,  label: "1000m" },
-        "1500": { time: 136.64, label: "1500m" }
-      }
-    },
-    lt: {
-      // Reference times are CDN Records (back-calculated from A1 standard ÷ A1%)
-      male: {
-        "500":   { time: 33.77,  label: "500m" },
-        "1000":  { time: 66.72,  label: "1000m" },
-        "1500":  { time: 102.01, label: "1500m" },
-        "5000":  { time: 361.85, label: "5000m" },
-        "10000": { time: 755.75, label: "10000m" }
-      },
-      female: {
-        "500":  { time: 37.22,  label: "500m" },
-        "1000": { time: 72.68,  label: "1000m" },
-        "1500": { time: 111.76, label: "1500m" },
-        "3000": { time: 233.38, label: "3000m" },
-        "5000": { time: 406.82, label: "5000m" }
-      }
-    }
-  };
-
-  // CDN Junior ISU Records — used as the reference for Dev Team eligibility (ST only)
-  const jrRecords = {
-    st: {
-      male:   { "500": 40.24, "1000": 84.05, "1500": 132.70 },
-      female: { "500": 42.92, "1000": 88.38, "1500": 143.53 }
-    }
-  };
-
-  // Dev Team time thresholds by discipline/gender/event (as a multiplier of the reference)
-  const devThresholds = {
-    st: { male: 1.15, female: 1.15 }, // 115% of CDN Jr ISU Rec
-    lt: {
-      male:   { "500": 1.19, "1000": 1.19, "1500": 1.19, "5000": 1.21, "10000": 1.21 },
-      female: { "500": 1.18, "1000": 1.20, "1500": 1.21, "3000": 1.22, "5000": 1.22 }
-    }
-  };
-
-  const activeBtn = "border: 2px solid #199bff; background: #199bff; color: white;";
-  const inactiveBtn = "border: 2px solid #ddd; background: #f5f5f5; color: #333;";
-
-  function selectGender(value) {
-    document.getElementById("gender").value = value;
-    document.getElementById("btn-male").style.cssText = (value === "male" ? activeBtn : inactiveBtn) + " flex: 1; padding: 9px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;";
-    document.getElementById("btn-female").style.cssText = (value === "female" ? activeBtn : inactiveBtn) + " flex: 1; padding: 9px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;";
-    updateEventOptions();
-  }
-
-  function selectTrack(value) {
-    document.getElementById("trackType").value = value;
-    document.getElementById("btn-st").style.cssText = (value === "st" ? activeBtn : inactiveBtn) + " flex: 1; padding: 9px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;";
-    document.getElementById("btn-lt").style.cssText = (value === "lt" ? activeBtn : inactiveBtn) + " flex: 1; padding: 9px; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 3px; font-family: Arial, sans-serif;";
-    const banner = document.getElementById("disciplineBanner");
-    banner.src = value === "st" ? "stphoto.jpg" : "ltphoto.jpg";
-    banner.style.display = "block";
-    document.getElementById("resultBannerTitle").style.display = "block";
-    updateEventOptions();
-  }
-
-  function updateEventOptions() {
-    const gender = document.getElementById("gender").value;
-    const trackType = document.getElementById("trackType").value;
-    const event1 = document.getElementById("event1");
-    const event2 = document.getElementById("event2");
-
-    event1.innerHTML = '<option value="">-- Select Event --</option>';
-    event2.innerHTML = '<option value="">-- Select Event --</option>';
-
-
-    if (gender && trackType) {
-      const records = cdnRecords[trackType][gender];
-      for (const [key, value] of Object.entries(records)) {
-        const option1 = document.createElement("option");
-        option1.value = key;
-        option1.textContent = value.label;
-        event1.appendChild(option1);
-
-        const option2 = document.createElement("option");
-        option2.value = key;
-        option2.textContent = value.label;
-        event2.appendChild(option2);
-      }
-
-      // Show appendix and update it
-      document.getElementById("appendixSection").style.display = "block";
-      updateAppendix(gender, trackType);
-    } else {
-      document.getElementById("appendixSection").style.display = "none";
-    }
-  }
-
-  // Returns the ISU classification for the 2025-26 season, or null if not eligible for Development Team.
-  // Development Team age eligibility: DOB between 1/7/2006 and 30/6/2011 (ages 14-18 before July 1, 2025).
-  function getISUClassification(dob) {
-    if (!dob) return null;
-    const d = new Date(dob);
-    // Season cutoff: July 1, 2025
-    const cutoff = new Date("2025-07-01");
-    const ageAtCutoff = cutoff.getFullYear() - d.getFullYear() -
-      (cutoff < new Date(cutoff.getFullYear(), d.getMonth(), d.getDate()) ? 1 : 0);
-
-    if (ageAtCutoff === 14) return { ssc: "Neo Junior", isu: "Junior C (C2)" };
-    if (ageAtCutoff === 15) return { ssc: "Neo Junior", isu: "Junior B (B1)" };
-    if (ageAtCutoff === 16) return { ssc: "Junior", isu: "Junior B (B2)" };
-    if (ageAtCutoff === 17) return { ssc: "Junior", isu: "Junior A (A1)" };
-    if (ageAtCutoff === 18) return { ssc: "Junior", isu: "Junior A (A2)" };
-    return null;
-  }
-
-  function updateAppendix(gender, trackType) {
-    const genderLabel = gender === "male" ? "Male" : "Female";
-    const trackLabel = trackType === "st" ? "Short Track" : "Long Track";
-
-    document.getElementById("appendixTitle").textContent = `Criteria: ${trackLabel} — ${genderLabel}`;
-    document.getElementById("appendixDefault").style.display = "none";
-    document.getElementById("appendixContent").style.display = "block";
-
-    if (trackType === "st") {
-      document.getElementById("stHeading").style.display = "block";
-      document.getElementById("ltHeading").style.display = "none";
-      document.getElementById("stTable").style.display = "table";
-      document.getElementById("ltTable").style.display = "none";
-      document.getElementById("stRecordsHeading").style.display = "block";
-      document.getElementById("stRecordsTable").style.display = "table";
-      document.getElementById("ltRecordsHeading").style.display = "none";
-      document.getElementById("ltRecordsTable").style.display = "none";
-
-      // ST records table: rows 1=male header, 2-4=male data, 5=female header, 6-8=female data
-      const stRecordsTable = document.getElementById("stRecordsTable");
-      const recRows = stRecordsTable.querySelectorAll("tr");
-      recRows.forEach((row, idx) => {
-        if (idx === 0) {
-          row.style.display = "table-row"; // column headers
-        } else if (idx <= 3) {
-          row.style.display = gender === "male" ? "table-row" : "none"; // male 500/1000/1500
-        } else {
-          row.style.display = gender === "female" ? "table-row" : "none"; // female header + 3 distances
-        }
-      });
-    } else {
-      document.getElementById("stHeading").style.display = "none";
-      document.getElementById("ltHeading").style.display = "block";
-      document.getElementById("stTable").style.display = "none";
-      document.getElementById("ltTable").style.display = "table";
-      document.getElementById("stRecordsHeading").style.display = "none";
-      document.getElementById("stRecordsTable").style.display = "none";
-      document.getElementById("ltRecordsHeading").style.display = "block";
-      document.getElementById("ltRecordsTable").style.display = "table";
-
-      // LT records table: rows 1–5 male, rows 6–10 female
-      const ltRecordsTable = document.getElementById("ltRecordsTable");
-      const ltRecRows = ltRecordsTable.querySelectorAll("tr");
-      ltRecRows.forEach((row, idx) => {
-        if (idx === 0) {
-          row.style.display = "table-row";
-        } else if (idx <= 5) {
-          row.style.display = gender === "male" ? "table-row" : "none";
-        } else {
-          row.style.display = gender === "female" ? "table-row" : "none";
-        }
-      });
-
-      // LT table: Hide male (rows 1-5) or female (rows 6-10) rows
-      const ltTable = document.getElementById("ltTable");
-      const rows = ltTable.querySelectorAll("tr");
-
-      rows.forEach((row, idx) => {
-        if (idx === 0) {
-          // Header row - always show
-          row.style.display = "table-row";
-        } else if (idx <= 5) {
-          // Male rows (1-5: 500, 1000, 1500, 5000, 10000)
-          row.style.display = gender === "male" ? "table-row" : "none";
-        } else {
-          // Female rows (6-10: 500, 1000, 1500, 3000, 5000)
-          row.style.display = gender === "female" ? "table-row" : "none";
-        }
-      });
-    }
-  }
-
-  function determineLevel(percent) {
-    if (percent <= 106) return "A1";
-    if (percent <= 108) return "A2";
-    if (percent <= 110) return "A3";
-    if (percent <= 112) return "B1";
-    if (percent <= 115) return "B2";
-    return null;
-  }
-
-  function calculate() {
-    const athlete1 = getTimeInSeconds(document.getElementById("time1").value);
-    const athlete2 = getTimeInSeconds(document.getElementById("time2").value);
-    const trackType = document.getElementById("trackType").value;
-    const gender = document.getElementById("gender").value;
-    const event1Key = document.getElementById("event1").value;
-    const event2Key = document.getElementById("event2").value;
-    const standard1 = event1Key ? cdnRecords[trackType][gender][event1Key].time : NaN;
-    const standard2 = event2Key ? cdnRecords[trackType][gender][event2Key].time : NaN;
-
-    if (isNaN(athlete1) || isNaN(athlete2) || !standard1 || !standard2) {
-      document.getElementById("results").innerHTML = `
-        <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px; background: #fff5f5;">
-          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 4px;">Breakdown</p>
-          <p style="font-size: 12px; color: #d32f2f;">Please enter all required information to see results.</p>
-        </div>
-        <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fff5f5;">
-          <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
-          <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-        </div>`;
-      return;
-    }
-
-    const event1Label = document.getElementById("event1").selectedOptions[0].text;
-    const event2Label = document.getElementById("event2").selectedOptions[0].text;
-
-    const percent1 = (athlete1 / standard1) * 100;
-    const percent2 = (athlete2 / standard2) * 100;
-    const cumulativePercent = (percent1 + percent2) / 2;
-    const level = determineLevel(cumulativePercent);
-
-    // Dev Team time standard check (separate reference from provincial team)
-    let meetsDevStandard = false;
-    if (trackType === "st") {
-      const jrStd1 = jrRecords.st[gender][event1Key];
-      const jrStd2 = jrRecords.st[gender][event2Key];
-      const devPct1 = (athlete1 / jrStd1) * 100;
-      const devPct2 = (athlete2 / jrStd2) * 100;
-      const devAvg = (devPct1 + devPct2) / 2;
-      meetsDevStandard = devAvg <= (devThresholds.st[gender] * 100);
-    } else {
-      const thresh1 = devThresholds.lt[gender][event1Key] * 100;
-      const thresh2 = devThresholds.lt[gender][event2Key] * 100;
-      meetsDevStandard = percent1 <= thresh1 && percent2 <= thresh2;
-    }
-
-    const dob = document.getElementById("dob").value;
-    const isuClass = getISUClassification(dob);
-    const devEligible = isuClass && meetsDevStandard;
-
-    // Single outcome: provincial level takes priority, then Dev. Team, then Not Qualified
-    const finalLevel = level ? level : (devEligible ? "Dev. Team" : null);
-    const qualified = finalLevel !== null;
-    const finalDisplay = finalLevel ?? "Not Qualified";
-    const finalColor = qualified ? "#199bff" : "#c0625a";
-
-    const disciplineLabel = trackType === 'st' ? 'Short Track' : 'Long Track';
-    const genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
-    let subtitle = `${disciplineLabel} / ${genderLabel}`;
-    if (dob && isuClass) subtitle += ` · ${isuClass.ssc} / ${isuClass.isu}`;
-    else if (!dob && !level) subtitle += ` · Enter date of birth for development team eligibility`;
-
-    document.getElementById("results").innerHTML = `
-      <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
-        <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Breakdown</p>
-        <p style="font-size: 12px; color: #555; margin-bottom: 4px;"><strong style="color: #333;">${event1Label}:</strong> ${athlete1}s ÷ ${standard1}s × 100 = <strong>${percent1.toFixed(3)}%</strong></p>
-        <p style="font-size: 12px; color: #555;"><strong style="color: #333;">${event2Label}:</strong> ${athlete2}s ÷ ${standard2}s × 100 = <strong>${percent2.toFixed(3)}%</strong></p>
-        <p style="font-size: 12px; color: #999; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee;">Average: (${percent1.toFixed(3)} + ${percent2.toFixed(3)}) ÷ 2 = <strong style="color: #555;">${cumulativePercent.toFixed(3)}%</strong></p>
-      </div>
-      <div style="border: 2px solid ${qualified ? '#f5c842' : '#ddd'}; border-radius: 3px; padding: 15px; background: ${qualified ? '#fffef0' : '#fafafa'};">
-        <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
-        <p style="font-size: 28px; font-weight: 700; color: ${finalColor}; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">${finalDisplay}</p>
-        <p style="font-size: 11px; color: #999; margin-top: 4px;">${subtitle}</p>
-      </div>
-    `;
-  }
-
-  function runExample() {
-    selectGender("male");
-    selectTrack("st");
-    document.getElementById("event1").value = "500";
-    document.getElementById("event2").value = "1500";
-    if (document.getElementById("timeFormat").checked) {
-      populateSplitTime("time1", 43.707);
-      populateSplitTime("time2", 135.964);
-    } else {
-      document.getElementById("time1").value = "43.707";
-      document.getElementById("time2").value = "135.964";
-    }
-    calculate();
-  }
-
-  function toggleTimeFormat() {
-    const isMinSecFormat = document.getElementById("timeFormat").checked;
-
-    // Toggle display for time 1
-    document.querySelector("#time1.time-single").style.display = isMinSecFormat ? "none" : "block";
-    document.getElementById("time1-split").style.display = isMinSecFormat ? "flex" : "none";
-
-    // Toggle display for time 2
-    document.querySelector("#time2.time-single").style.display = isMinSecFormat ? "none" : "block";
-    document.getElementById("time2-split").style.display = isMinSecFormat ? "flex" : "none";
-
-    // Convert values
-    const time1 = document.getElementById("time1");
-    const time2 = document.getElementById("time2");
-
-    if (isMinSecFormat) {
-      // Convert to split format
-      if (time1.value) populateSplitTime("time1", parseFloat(time1.value));
-      if (time2.value) populateSplitTime("time2", parseFloat(time2.value));
-    } else {
-      // Convert back to single format
-      if (document.getElementById("time1-min").value || document.getElementById("time1-sec").value) {
-        time1.value = getSplitTimeInSeconds("time1").toFixed(3);
-      }
-      if (document.getElementById("time2-min").value || document.getElementById("time2-sec").value) {
-        time2.value = getSplitTimeInSeconds("time2").toFixed(3);
-      }
-    }
-  }
-
-  function populateSplitTime(timeId, seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    const ms = Math.round((seconds % 1) * 1000);
-
-    document.getElementById(timeId + "-min").value = mins || "";
-    document.getElementById(timeId + "-sec").value = secs || "";
-    document.getElementById(timeId + "-ms").value = ms || "";
-  }
-
-  function getSplitTimeInSeconds(timeId) {
-    const mins = parseInt(document.getElementById(timeId + "-min").value) || 0;
-    const secs = parseInt(document.getElementById(timeId + "-sec").value) || 0;
-    const ms = parseInt(document.getElementById(timeId + "-ms").value) || 0;
-    return mins * 60 + secs + (ms / 1000);
-  }
-
-  function syncTime1() {
-    if (document.getElementById("timeFormat").checked) {
-      document.getElementById("time1").value = getSplitTimeInSeconds("time1").toFixed(3);
-    }
-  }
-
-  function syncTime2() {
-    if (document.getElementById("timeFormat").checked) {
-      document.getElementById("time2").value = getSplitTimeInSeconds("time2").toFixed(3);
-    }
-  }
-
-  function convertTimeFormat(time, toMinSec) {
-    if (!time) return "";
-
-    if (toMinSec) {
-      // Convert seconds to min:sec.ms format
-      const seconds = parseFloat(time);
-      const mins = Math.floor(seconds / 60);
-      const secs = (seconds % 60).toFixed(3);
-      return mins + ":" + secs;
-    } else {
-      // Convert min:sec.ms to seconds
-      if (time.includes(":")) {
-        const parts = time.split(":");
-        const mins = parseInt(parts[0]);
-        const secs = parseFloat(parts[1]);
-        return (mins * 60 + secs).toFixed(3);
-      }
-      return time;
-    }
-  }
-
-  function getTimeInSeconds(timeString) {
-    if (!timeString) return NaN;
-
-    if (timeString.includes(":")) {
-      // min:sec.ms format
-      const parts = timeString.split(":");
-      const mins = parseInt(parts[0]);
-      const secs = parseFloat(parts[1]);
-      return mins * 60 + secs;
-    } else {
-      // Already in seconds
-      return parseFloat(timeString);
-    }
-  }
-  selectGender('male');
-  selectTrack('st');
-  document.getElementById("results").innerHTML = `
-    <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; margin-bottom: 15px;">
-      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Breakdown</p>
-      <p style="font-size: 12px; color: #ccc;">Please enter all required information to see results.</p>
-    </div>
-    <div style="border: 2px solid #ddd; border-radius: 3px; padding: 15px; background: #fafafa;">
-      <p style="font-size: 12px; font-weight: bold; color: #555; margin-bottom: 8px;">Result</p>
-      <p style="font-size: 28px; font-weight: 700; color: #ccc; font-family: 'Bebas Neue', Arial, sans-serif; letter-spacing: 1px;">—</p>
-    </div>
-  `;
-</script>
-
+  <h1>I'm Emil.<br><em>Here's what I work on.</em></h1>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="dither" width="2" height="2" patternUnits="userSpaceOnUse">
+        <rect width="1" height="1" fill="#000080"/>
+        <rect x="1" y="1" width="1" height="1" fill="#000080"/>
+      </pattern>
+      <symbol id="folder" viewBox="0 0 32 26">
+        <path fill="#8a6200" d="M2 0h10v1h-10zM1 1h1v1h-1zM12 1h1v1h-1zM1 2h1v1h-1zM12 2h1v1h-1zM1 3h30v1h-30zM0 4h1v1h-1zM31 4h1v1h-1zM0 5h1v1h-1zM31 5h1v1h-1zM0 6h1v1h-1zM31 6h1v1h-1zM0 7h1v1h-1zM31 7h1v1h-1zM0 8h1v1h-1zM31 8h1v1h-1zM1 9h30v1h-30zM0 10h1v1h-1zM31 10h1v1h-1zM0 11h1v1h-1zM31 11h1v1h-1zM0 12h1v1h-1zM31 12h1v1h-1zM0 13h1v1h-1zM31 13h1v1h-1zM0 14h1v1h-1zM31 14h1v1h-1zM0 15h1v1h-1zM31 15h1v1h-1zM0 16h1v1h-1zM31 16h1v1h-1zM0 17h1v1h-1zM31 17h1v1h-1zM0 18h1v1h-1zM31 18h1v1h-1zM0 19h1v1h-1zM31 19h1v1h-1zM0 20h1v1h-1zM31 20h1v1h-1zM0 21h1v1h-1zM31 21h1v1h-1zM0 22h1v1h-1zM31 22h1v1h-1zM0 23h1v1h-1zM31 23h1v1h-1zM0 24h1v1h-1zM31 24h1v1h-1zM1 25h30v1h-30z"/>
+        <path fill="#f2cc55" d="M2 1h10v1h-10zM2 2h10v1h-10zM1 4h12v1h-12z"/>
+        <path fill="#e5b33a" d="M13 4h18v1h-18zM1 5h2v1h-2zM29 5h2v1h-2zM1 6h2v1h-2zM29 6h2v1h-2zM1 7h2v1h-2zM29 7h2v1h-2zM1 8h2v1h-2zM29 8h2v1h-2z"/>
+        <path fill="#9a9a9a" d="M3 5h26v1h-26zM3 6h1v1h-1zM28 6h1v1h-1zM3 7h1v1h-1zM28 7h1v1h-1zM3 8h1v1h-1zM28 8h1v1h-1z"/>
+        <path fill="#ffffff" d="M4 6h24v1h-24zM4 7h2v1h-2zM25 7h3v1h-3zM4 8h24v1h-24z"/>
+        <path fill="#c8d4e6" d="M6 7h19v1h-19z"/>
+        <path fill="#fffbe6" d="M1 10h30v1h-30z"/>
+        <path fill="#fff6c4" d="M1 11h29v1h-29z"/>
+        <path fill="#c99419" d="M30 11h1v1h-1zM30 12h1v1h-1zM30 13h1v1h-1zM30 14h1v1h-1zM30 15h1v1h-1zM30 16h1v1h-1zM30 17h1v1h-1zM30 18h1v1h-1zM30 19h1v1h-1zM30 20h1v1h-1zM30 21h1v1h-1zM30 22h1v1h-1zM30 23h1v1h-1zM1 24h30v1h-30z"/>
+        <path fill="#ffeea0" d="M1 12h29v1h-29z"/>
+        <path fill="#fde68a" d="M1 13h29v1h-29z"/>
+        <path fill="#fbdf78" d="M1 14h29v1h-29z"/>
+        <path fill="#f9d96c" d="M1 15h29v1h-29z"/>
+        <path fill="#f7d362" d="M1 16h29v1h-29z"/>
+        <path fill="#f5cd58" d="M1 17h29v1h-29z"/>
+        <path fill="#f2c64f" d="M1 18h29v1h-29z"/>
+        <path fill="#efc047" d="M1 19h29v1h-29z"/>
+        <path fill="#ecba40" d="M1 20h29v1h-29z"/>
+        <path fill="#e8b43a" d="M1 21h29v1h-29z"/>
+        <path fill="#e4ae35" d="M1 22h29v1h-29z"/>
+        <path fill="#e0a830" d="M1 23h29v1h-29z"/>
+      </symbol>
+      <symbol id="folder-sel" viewBox="0 0 32 26">
+        <path fill="url(#dither)" d="M2 0h10v1h-10zM1 1h12v1h-12zM1 2h12v1h-12zM1 3h30v1h-30zM0 4h32v1h-32zM0 5h32v1h-32zM0 6h32v1h-32zM0 7h32v1h-32zM0 8h32v1h-32zM1 9h30v1h-30zM0 10h32v1h-32zM0 11h32v1h-32zM0 12h32v1h-32zM0 13h32v1h-32zM0 14h32v1h-32zM0 15h32v1h-32zM0 16h32v1h-32zM0 17h32v1h-32zM0 18h32v1h-32zM0 19h32v1h-32zM0 20h32v1h-32zM0 21h32v1h-32zM0 22h32v1h-32zM0 23h32v1h-32zM0 24h32v1h-32zM1 25h30v1h-30z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <ul class="desktop">
+    <li><a class="icon" href="#speed-skating"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Speed Skating</span></a></li>
+    <li><a class="icon" href="#research"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Research</span></a></li>
+    <li><a class="icon" href="#websites"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Websites</span></a></li>
+    <li><a class="icon" href="#personal"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Personal</span></a></li>
+  </ul>
+
+  <a class="cv" href="cv.pdf" download>Or, just click here for my CV.</a>
+
+  <script>
+    // Click to select, like an old Windows desktop. Click empty space to deselect.
+    const icons = document.querySelectorAll('.icon');
+    icons.forEach(el => el.addEventListener('click', e => {
+      e.preventDefault();
+      icons.forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+    }));
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.icon')) icons.forEach(i => i.classList.remove('selected'));
+    });
+  </script>
 </body>
 </html>
