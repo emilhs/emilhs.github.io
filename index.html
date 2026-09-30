@@ -13,11 +13,17 @@
       --fg: #111111;
       --select: #000080; /* classic Windows selection navy */
       --select-fg: #ffffff;
+      --muted: #707070;
+      --rule: #e6e6e6;
+      --blue: #000080;
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0e0e0e;
         --fg: #f2f2f2;
+        --muted: #8f8f8f;
+        --rule: #262626;
+        --blue: #8fa8ff;
       }
     }
 
@@ -40,7 +46,7 @@
     h1 {
       font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
       font-weight: 400;
-      font-size: clamp(2rem, 9vw, 8rem);
+      font-size: 50px;
       line-height: 1;
       letter-spacing: -0.02em;
       margin: 0 0 9vh;
@@ -58,6 +64,7 @@
       margin: 0;
       padding: 0;
       max-width: 100%;
+      scroll-margin-top: 24px;
     }
 
     @media (max-width: 600px) {
@@ -107,6 +114,253 @@
       color: var(--fg);
       text-decoration: none;
     }
+
+    /* An open folder drawn as a whole Win98 window: grey body under the title bar */
+    .window {
+      padding: 3px;
+      background: #c0c0c0;
+      box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
+                  inset -2px -2px #808080, inset 2px 2px #ffffff;
+    }
+    .window .titlebar { margin-bottom: 0; }
+    .window .sites { padding: 13px; }
+
+    /* Website previews */
+    .sites {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 13px;
+    }
+    /* Each site framed as a little Win98 browser window */
+    .site {
+      display: block;
+      padding: 3px;
+      background: #c0c0c0;
+      color: #000;
+      text-decoration: none;
+      font: 11px Tahoma, Verdana, "Segoe UI", sans-serif;
+      box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
+                  inset -2px -2px #808080, inset 2px 2px #ffffff;
+    }
+    .site .field {
+      display: block;
+      margin: 2px 2px 5px;
+      padding: 2px 4px;
+      background: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-shadow: inset 1px 1px #808080, inset -1px -1px #dfdfdf,
+                  inset 2px 2px #0a0a0a;
+    }
+    .site img {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      border: 2px solid;
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+    }
+
+    /* Folder contents, shown below the row of folders */
+    .panel {
+      width: 100%;
+      max-width: 760px;
+      margin-top: 9vh; /* same gap as headline -> folders */
+      text-align: left;
+    }
+    .panel[hidden] { display: none; }
+
+    /* Win98 window title bar across the top of an open folder */
+    .titlebar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 3px 3px 8px;
+      margin-bottom: 20px;
+      background: #000080;
+      color: #fff;
+      font: bold 13px Tahoma, Verdana, "Segoe UI", sans-serif;
+    }
+    .titlebar > svg { width: 20px; height: 16px; flex: none; }
+    .titlebar span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .close {
+      display: grid;
+      place-items: center;
+      flex: none;
+      width: 32px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      background: #c0c0c0;
+      box-shadow: inset -2px -2px #0a0a0a, inset 2px 2px #ffffff,
+                  inset -4px -4px #808080, inset 4px 4px #dfdfdf;
+      cursor: pointer;
+    }
+    .close svg { width: 16px; height: 14px; shape-rendering: crispEdges; }
+    .close:active {
+      box-shadow: inset -2px -2px #ffffff, inset 2px 2px #0a0a0a,
+                  inset -4px -4px #dfdfdf, inset 4px 4px #808080;
+    }
+    .close:active svg { transform: translate(2px, 2px); }
+    .close:focus-visible { outline: 1px dotted #000; outline-offset: -7px; }
+
+    .lede {
+      font: 14px/1.5 Tahoma, Verdana, "Segoe UI", sans-serif;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 36ch;
+      color: var(--blue);
+    }
+    .lede + h2 { margin-top: 3vh; }
+
+    .panel h2 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.75rem;
+      margin: 6vh 0 0.5rem;
+    }
+
+    /* Personal records */
+    .prs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin: 0;
+    }
+    .prs button {
+      background: var(--bg);
+      color: var(--fg);
+      border: 0;
+      padding: 12px 14px;
+      min-width: 0;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+    .prs button[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--fg); }
+    .prs .d { display: block; font: 12px Tahoma, Verdana, sans-serif; color: var(--muted); }
+    .prs .t {
+      display: block;
+      margin: 2px 0 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.9rem;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    .prs small { display: block; font: 11px Tahoma, Verdana, sans-serif; color: var(--muted); margin-top: 2px; }
+    @media (max-width: 520px) { .prs { grid-template-columns: repeat(2, 1fr); } }
+
+    /* PB progression chart */
+    .chart { position: relative; margin-top: 20px; }
+    .chart[hidden] { display: none; }
+    .chart h4 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      margin: 0;
+    }
+    .chart p { font: 12px Tahoma, Verdana, sans-serif; color: var(--muted); margin: 2px 0 10px; }
+    .chart svg { display: block; width: 100%; overflow: visible; }
+    .chart svg text { font: 11px Tahoma, Verdana, sans-serif; fill: var(--muted); }
+    .chart .grid { stroke: var(--rule); }
+    .chart .line { fill: none; stroke: var(--fg); stroke-width: 2; }
+    .chart .dot { fill: var(--fg); stroke: var(--bg); stroke-width: 1.5; }
+    .chart .cross { stroke: var(--muted); stroke-dasharray: 2 3; }
+    .tip {
+      position: absolute;
+      pointer-events: none;
+      background: var(--fg);
+      color: var(--bg);
+      font: 12px/1.35 Tahoma, Verdana, sans-serif;
+      padding: 5px 8px;
+      max-width: min(240px, 100%);
+      width: max-content;
+      transform: translate(-50%, calc(-100% - 12px));
+    }
+    .tip b { font-size: 13px; }
+
+    /* Results */
+    .season summary {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0 8px;
+      border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+      list-style: none;
+    }
+    .season summary::-webkit-details-marker { display: none; }
+    .season summary::before {
+      content: "+";
+      width: 12px;
+      font: 14px Tahoma, Verdana, sans-serif;
+      color: var(--muted);
+    }
+    .season[open] summary::before { content: "\2212"; }
+    .season[open] summary { border-bottom-color: var(--fg); }
+    .season h3 {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      font-size: 1.35rem;
+      margin: 0;
+    }
+    .season .count { margin-left: auto; font: 12px Tahoma, Verdana, sans-serif; color: var(--muted); }
+    .season ol { margin-bottom: 16px; }
+    .panel ol { list-style: none; margin: 0; padding: 0; }
+    li.race {
+      display: grid;
+      grid-template-columns: 58px 60px 78px 1fr;
+      gap: 0 14px;
+      align-items: baseline;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--rule);
+      font: 13px/1.35 Tahoma, Verdana, "Segoe UI", sans-serif;
+    }
+    .date, .loc { color: var(--muted); }
+    .dist {
+      color: var(--muted);
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .time { font-variant-numeric: tabular-nums; }
+    .pb .time { font-weight: bold; }
+    .pb .time::after {
+      content: "PB";
+      margin-left: 5px;
+      font-size: 9px;
+      font-weight: normal;
+      color: var(--muted);
+      vertical-align: 2px;
+    }
+    .event { min-width: 0; overflow-wrap: break-word; }
+    .event a { color: var(--fg); text-decoration: none; }
+    .loc { display: block; font-size: 12px; }
+
+    @media (max-width: 520px) {
+      li.race {
+        grid-template-columns: 52px 54px 1fr;
+        grid-template-areas: "date dist time" "event event event";
+      }
+      .date { grid-area: date; }
+      .dist { grid-area: dist; }
+      .time { grid-area: time; }
+      .event { grid-area: event; margin-top: 2px; }
+    }
+
+    .panel footer {
+      margin-top: 8vh;
+      font: 12px Tahoma, Verdana, sans-serif;
+      color: var(--muted);
+    }
+    .panel footer a { color: inherit; }
   </style>
 </head>
 <body>
@@ -148,25 +402,248 @@
   </svg>
 
   <ul class="desktop">
-    <li><a class="icon" href="#speed-skating"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Speed Skating</span></a></li>
+    <li><a class="icon" href="#speed-skating" data-panel="speed-skating"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Speed Skating</span></a></li>
     <li><a class="icon" href="#research"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Research</span></a></li>
-    <li><a class="icon" href="#websites"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Websites</span></a></li>
+    <li><a class="icon" href="#websites" data-panel="websites"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Websites</span></a></li>
     <li><a class="icon" href="#personal"><svg viewBox="0 0 32 26"><use href="#folder"/><use class="dither" href="#folder-sel"/></svg><span>Personal</span></a></li>
   </ul>
 
+  <section class="panel" id="speed-skating" hidden>
+    <div class="titlebar">
+      <svg viewBox="0 0 32 26" aria-hidden="true"><use href="#folder"/></svg>
+      <span>Speed Skating</span>
+      <button type="button" class="close" aria-label="Close"><svg viewBox="0 0 8 7" aria-hidden="true"><path d="M0 0h2v1h-2zM6 0h2v1h-2zM1 1h2v1h-2zM5 1h2v1h-2zM2 2h4v1h-4zM3 3h2v1h-2zM2 4h4v1h-4zM1 5h2v1h-2zM5 5h2v1h-2zM0 6h2v1h-2zM6 6h2v1h-2z"/></svg></button>
+    </div>
+    <p class="lede" id="lede"></p>
+
+    <h2>Personal records</h2>
+    <div class="prs" id="prs"></div>
+    <div class="chart" id="chart" hidden></div>
+
+    <h2>Every race</h2>
+    <div id="results"></div>
+
+    <footer>
+      Results from <a href="https://www.speedskatingresults.com/index.php?p=17&amp;s=46506">SpeedskatingResults.com</a>.
+      <b>PB</b> marks a new personal best at the time. Tap a distance to see its PB progression.
+    </footer>
+  </section>
+
+  <section class="panel window" id="websites" hidden>
+    <div class="titlebar">
+      <svg viewBox="0 0 32 26" aria-hidden="true"><use href="#folder"/></svg>
+      <span>Websites</span>
+      <button type="button" class="close" aria-label="Close"><svg viewBox="0 0 8 7" aria-hidden="true"><path d="M0 0h2v1h-2zM6 0h2v1h-2zM1 1h2v1h-2zM5 1h2v1h-2zM2 2h4v1h-4zM3 3h2v1h-2zM2 4h4v1h-4zM1 5h2v1h-2zM5 5h2v1h-2zM0 6h2v1h-2zM6 6h2v1h-2z"/></svg></button>
+    </div>
+    <div class="sites">
+      <a class="site" href="https://www.powercalc.ca" target="_blank" rel="noopener">
+        <span class="field">https://www.powercalc.ca</span>
+        <img src="images/sites/powercalc.ca.png" width="200" height="125" alt="Preview of powercalc.ca" loading="lazy">
+      </a>
+      <a class="site" href="https://www.results.ontariospeedskating.ca" target="_blank" rel="noopener">
+        <span class="field">https://www.results.ontariospeedskating.ca</span>
+        <img src="images/sites/results.ontariospeedskating.ca.png" width="200" height="125" alt="Preview of results.ontariospeedskating.ca" loading="lazy">
+      </a>
+      <a class="site" href="https://results.speedskatingalberta.ca" target="_blank" rel="noopener">
+        <span class="field">https://results.speedskatingalberta.ca</span>
+        <img src="images/sites/results.speedskatingalberta.ca.png" width="200" height="125" alt="Preview of results.speedskatingalberta.ca" loading="lazy">
+      </a>
+    </div>
+  </section>
+
   <a class="cv" href="cv.pdf" download>Or, just click here for my CV.</a>
 
+  <!-- Generated by scripts/update_skating.py — rerun it to refresh. -->
+  <script id="data" type="application/json">/*DATA*/[{"date":"2013-11-17","distance":500,"time":"1.01,27","name":"Camp Provincial LP","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=11073&r=20001&s=46506"},{"date":"2014-11-16","distance":500,"time":"58,20","name":"Camp Provincial Longue Piste 2014","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13010&r=20001&s=46506"},{"date":"2014-11-16","distance":1000,"time":"2.00,59","name":"Camp Provincial Longue Piste 2014","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13010&r=20002&s=46506"},{"date":"2015-01-09","distance":500,"time":"54,73","name":"Jack Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13556&r=1&s=46506"},{"date":"2015-01-09","distance":1000,"time":"1.54,62","name":"Jack Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13556&r=2&s=46506"},{"date":"2015-01-10","distance":500,"time":"55,86","name":"Jack Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13556&r=3&s=46506"},{"date":"2015-01-10","distance":1000,"time":"2.00,07","name":"Jack Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13556&r=4&s=46506"},{"date":"2015-01-17","distance":500,"time":"55,51","name":"Ontario Provincial Championships 2015","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13646&r=20010&s=46506"},{"date":"2015-02-07","distance":500,"time":"54,29","name":"Canadian Age Class Long Track Championships","location":"Saskatoon (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=13902&r=20006&s=46506"},{"date":"2015-11-15","distance":500,"time":"55,68","name":"Camp Provincial Longue Piste","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=14805&r=20001&s=46506"},{"date":"2015-11-15","distance":1000,"time":"1.53,86","name":"Camp Provincial Longue Piste","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=14805&r=20002&s=46506"},{"date":"2016-01-09","distance":500,"time":"53,65","name":"Compétition Hybride 2","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=15291&r=20001&s=46506"},{"date":"2016-01-09","distance":1000,"time":"1.49,37","name":"Compétition Hybride 2","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=15291&r=20002&s=46506"},{"date":"2016-10-22","distance":500,"time":"49,35","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=16321&r=20001&s=46506"},{"date":"2016-10-22","distance":1500,"time":"2.27,22","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=16321&r=20004&s=46506"},{"date":"2016-11-20","distance":500,"time":"51,64","name":"Camp Provincial Longue Piste 2016","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=16565&r=20001&s=46506"},{"date":"2016-11-20","distance":1000,"time":"1.40,18","name":"Camp Provincial Longue Piste 2016","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=16565&r=20002&s=46506"},{"date":"2017-01-14","distance":500,"time":"49,16","name":"Provincial Long Track Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17135&r=8&s=46506"},{"date":"2017-01-14","distance":3000,"time":"5.35,47","name":"Provincial Long Track Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17135&r=11&s=46506"},{"date":"2017-01-15","distance":500,"time":"47,42","name":"Provincial Long Track Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17135&r=12&s=46506"},{"date":"2017-02-04","distance":3000,"time":"5.25,85","name":"Canadian Age Class Long Track Championships 2017","location":"Edmonton (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17389&r=20006&s=46506"},{"date":"2017-02-05","distance":500,"time":"47,05","name":"Canadian Age Class Long Track Championships 2017","location":"Edmonton (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17389&r=20010&s=46506"},{"date":"2017-02-18","distance":500,"time":"46,28","name":"2017 Charles Jewtraw Allround Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17581&r=20001&s=46506"},{"date":"2017-02-18","distance":1500,"time":"2.24,14","name":"2017 Charles Jewtraw Allround Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17581&r=20002&s=46506"},{"date":"2017-02-19","distance":1000,"time":"1.32,71","name":"2017 Charles Jewtraw Allround Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17581&r=20004&s=46506"},{"date":"2017-02-19","distance":3000,"time":"5.34,84","name":"2017 Charles Jewtraw Allround Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=17581&r=20006&s=46506"},{"date":"2017-10-21","distance":500,"time":"45,09","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18122&r=20001&s=46506"},{"date":"2017-10-21","distance":1500,"time":"2.24,29","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18122&r=20004&s=46506"},{"date":"2017-11-25","distance":500,"time":"44,67","name":"Coupe Québec 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18437&r=20001&s=46506"},{"date":"2017-11-25","distance":1500,"time":"2.28,13","name":"Coupe Québec 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18437&r=20002&s=46506"},{"date":"2017-11-26","distance":1000,"time":"1.33,71","name":"Coupe Québec 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18437&r=20003&s=46506"},{"date":"2017-12-01","distance":500,"time":"46,50","name":"Canada Cup 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18460&r=20001&s=46506"},{"date":"2017-12-01","distance":1500,"time":"2.23,74","name":"Canada Cup 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18460&r=20002&s=46506"},{"date":"2017-12-02","distance":1000,"time":"1.32,11","name":"Canada Cup 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18460&r=5&s=46506"},{"date":"2017-12-03","distance":500,"time":"45,27","name":"Canada Cup 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18460&r=20007&s=46506"},{"date":"2017-12-03","distance":1000,"time":"1.30,50","name":"Canada Cup 1","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=18460&r=20008&s=46506"},{"date":"2018-01-20","distance":500,"time":"46,42","name":"2018 Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19026&r=1&s=46506"},{"date":"2018-01-20","distance":1000,"time":"1.32,57","name":"2018 Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19026&r=2&s=46506"},{"date":"2018-01-21","distance":500,"time":"46,20","name":"2018 Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19026&r=3&s=46506"},{"date":"2018-01-21","distance":1000,"time":"1.35,86","name":"2018 Shea Sprint Championship","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19026&r=4&s=46506"},{"date":"2018-01-27","distance":500,"time":"44,90","name":"2018 Irving Jaffee Single Distance Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19142&r=20001&s=46506"},{"date":"2018-01-27","distance":5000,"time":"8.56,71","name":"2018 Irving Jaffee Single Distance Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19142&r=20003&s=46506"},{"date":"2018-01-28","distance":1000,"time":"1.32,26","name":"2018 Irving Jaffee Single Distance Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19142&r=20004&s=46506"},{"date":"2018-01-28","distance":3000,"time":"5.06,80","name":"2018 Irving Jaffee Single Distance Championships","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19142&r=20005&s=46506"},{"date":"2018-02-11","distance":500,"time":"46,88","name":"Canadian Age Class Long Track Championships 2018","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19315&r=20001&s=46506"},{"date":"2018-02-11","distance":1500,"time":"2.30,00","name":"Canadian Age Class Long Track Championships 2018","location":"Quebec City-Boucher (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19315&r=20002&s=46506"},{"date":"2018-10-13","distance":500,"time":"43,24","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19906&r=20001&s=46506"},{"date":"2018-10-13","distance":1500,"time":"2.17,29","name":"Time Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=19906&r=20004&s=46506"},{"date":"2018-11-17","distance":500,"time":"42,84","name":"PNIC LT","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20132&r=20001&s=46506"},{"date":"2018-11-17","distance":1500,"time":"2.11,59","name":"PNIC LT","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20132&r=20004&s=46506"},{"date":"2018-12-22","distance":500,"time":"41,99","name":"OSSA Canada Winter Games Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20491&r=3&s=46506"},{"date":"2018-12-22","distance":1500,"time":"2.10,28","name":"OSSA Canada Winter Games Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20491&r=4&s=46506"},{"date":"2018-12-23","distance":1000,"time":"1.23,03","name":"OSSA Canada Winter Games Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20491&r=5&s=46506"},{"date":"2018-12-23","distance":5000,"time":"7.56,06","name":"OSSA Canada Winter Games Trials","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20491&r=6&s=46506"},{"date":"2019-01-04","distance":500,"time":"41,20","name":"Canada - Junior Championships 2019","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20601&r=1&s=46506"},{"date":"2019-01-04","distance":1500,"time":"2.04,85","name":"Canada - Junior Championships 2019","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20601&r=2&s=46506"},{"date":"2019-01-05","distance":1000,"time":"1.24,16","name":"Canada - Junior Championships 2019","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20601&r=8&s=46506"},{"date":"2019-01-06","distance":500,"time":"42,35","name":"Canada Cup #2","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20602&r=12&s=46506"},{"date":"2019-01-06","distance":1000,"time":"1.23,13","name":"Canada Cup #2","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20602&r=13&s=46506"},{"date":"2019-01-12","distance":500,"time":"46,19","name":"2019 Ontario Provincial Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20726&r=18&s=46506"},{"date":"2019-01-12","distance":1500,"time":"2.22,39","name":"2019 Ontario Provincial Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20726&r=17&s=46506"},{"date":"2019-01-13","distance":500,"time":"44,45","name":"2019 Ontario Provincial Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20726&r=19&s=46506"},{"date":"2019-01-13","distance":1000,"time":"1.30,35","name":"2019 Ontario Provincial Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20726&r=16&s=46506"},{"date":"2019-01-13","distance":5000,"time":"8.42,54","name":"2019 Ontario Provincial Championships","location":"Ottawa (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=20726&r=20&s=46506"},{"date":"2019-02-16","distance":500,"time":"45,15","name":"2019 Heiden Challenge","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21146&r=20001&s=46506"},{"date":"2019-02-16","distance":1000,"time":"1.28,85","name":"2019 Heiden Challenge","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21146&r=20004&s=46506"},{"date":"2019-02-16","distance":1500,"time":"2.16,07","name":"2019 Heiden Challenge","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21146&r=20005&s=46506"},{"date":"2019-02-16","distance":5000,"time":"8.40,97","name":"2019 Heiden Challenge","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21146&r=20003&s=46506"},{"date":"2019-02-17","distance":10000,"time":"17.29,30","name":"2019 Heiden Challenge","location":"Lake Placid (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21146&r=20007&s=46506"},{"date":"2019-03-01","distance":500,"time":"42,59","name":"AmCup Final / USA - Masters Single Distance Championships 2019","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21279&r=3&s=46506"},{"date":"2019-03-01","distance":5000,"time":"7.38,62","name":"AmCup Final / USA - Masters Single Distance Championships 2019","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21279&r=4&s=46506"},{"date":"2019-03-02","distance":1500,"time":"2.07,37","name":"AmCup Final / USA - Masters Single Distance Championships 2019","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21279&r=6&s=46506"},{"date":"2019-03-03","distance":1000,"time":"1.23,14","name":"AmCup Final / USA - Masters Single Distance Championships 2019","location":"Milwaukee (USA)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21279&r=10&s=46506"},{"date":"2019-03-14","distance":500,"time":"41,20","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=1&s=46506"},{"date":"2019-03-14","distance":1000,"time":"1.21,62","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=2&s=46506"},{"date":"2019-03-15","distance":5000,"time":"7.26,83","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=5&s=46506"},{"date":"2019-03-16","distance":500,"time":"41,16","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=8&s=46506"},{"date":"2019-03-16","distance":1000,"time":"1.19,50","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=9&s=46506"},{"date":"2019-03-17","distance":1500,"time":"2.03,74","name":"Olympic Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21422&r=14&s=46506"},{"date":"2019-09-14","distance":3000,"time":"4.23,69","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21602&r=20004&s=46506"},{"date":"2019-09-21","distance":1500,"time":"2.02,50","name":"2019 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21603&r=11&s=46506"},{"date":"2019-09-22","distance":500,"time":"40,94","name":"2019 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21603&r=12&s=46506"},{"date":"2019-09-22","distance":1000,"time":"1.18,94","name":"2019 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21603&r=13&s=46506"},{"date":"2019-10-05","distance":5000,"time":"7.33,30","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21622&r=20002&s=46506"},{"date":"2019-10-18","distance":500,"time":"40,26","name":"Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21677&r=1&s=46506"},{"date":"2019-10-18","distance":5000,"time":"7.17,87","name":"Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21677&r=2&s=46506"},{"date":"2019-10-19","distance":500,"time":"39,67","name":"Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21677&r=6&s=46506"},{"date":"2019-10-19","distance":1000,"time":"1.17,75","name":"Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21677&r=7&s=46506"},{"date":"2019-10-20","distance":1500,"time":"2.00,32","name":"Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21677&r=11&s=46506"},{"date":"2019-11-02","distance":3000,"time":"4.18,52","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21767&r=20003&s=46506"},{"date":"2019-11-09","distance":5000,"time":"7.18,01","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21810&r=7&s=46506"},{"date":"2019-11-10","distance":500,"time":"39,85","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21810&r=13&s=46506"},{"date":"2019-11-10","distance":1500,"time":"1.59,62","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=21810&r=14&s=46506"},{"date":"2020-01-03","distance":500,"time":"40,82","name":"Canada - Junior Championships 2020","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22356&r=1&s=46506"},{"date":"2020-01-03","distance":1500,"time":"1.58,56","name":"Canada - Junior Championships 2020","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22356&r=2&s=46506"},{"date":"2020-01-04","distance":1000,"time":"1.16,45","name":"Canada - Junior Championships 2020","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22356&r=7&s=46506"},{"date":"2020-01-04","distance":5000,"time":"7.18,96","name":"Canada - Junior Championships 2020","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22356&r=8&s=46506"},{"date":"2020-01-05","distance":500,"time":"38,73","name":"Canada Cup 2","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22358&r=9&s=46506"},{"date":"2020-01-05","distance":1000,"time":"1.17,08","name":"Canada Cup 2","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22358&r=10&s=46506"},{"date":"2020-01-18","distance":500,"time":"40,67","name":"Jeremy Wotherspoon Open","location":"Red Deer (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22574&r=20007&s=46506"},{"date":"2020-01-18","distance":1000,"time":"1.22,86","name":"Jeremy Wotherspoon Open","location":"Red Deer (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22574&r=20008&s=46506"},{"date":"2020-02-01","distance":500,"time":"38,16","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22700&r=20001&s=46506"},{"date":"2020-02-22","distance":3000,"time":"4.15,18","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=22949&r=20001&s=46506"},{"date":"2021-08-14","distance":3000,"time":"4.14,90","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24023&r=20002&s=46506"},{"date":"2021-08-27","distance":500,"time":"38,51","name":"Summer Classic 2021","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24030&r=20001&s=46506"},{"date":"2021-08-28","distance":500,"time":"38,37","name":"Summer Classic 2021","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24030&r=20003&s=46506"},{"date":"2021-08-28","distance":1000,"time":"1.15,66","name":"Summer Classic 2021","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24030&r=20005&s=46506"},{"date":"2021-09-11","distance":500,"time":"37,90","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24037&r=20001&s=46506"},{"date":"2021-09-11","distance":1500,"time":"1.56,93","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24037&r=20004&s=46506"},{"date":"2021-09-24","distance":500,"time":"38,32","name":"2021 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24043&r=3&s=46506"},{"date":"2021-09-24","distance":1500,"time":"1.56,82","name":"2021 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24043&r=4&s=46506"},{"date":"2021-09-25","distance":500,"time":"38,08","name":"2021 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24043&r=9&s=46506"},{"date":"2021-09-26","distance":5000,"time":"7.11,69","name":"2021 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24043&r=18&s=46506"},{"date":"2021-10-09","distance":500,"time":"38,00","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24081&r=20001&s=46506"},{"date":"2021-10-09","distance":1000,"time":"1.15,02","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24081&r=20004&s=46506"},{"date":"2021-10-15","distance":500,"time":"38,14","name":"2021 Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24105&r=4&s=46506"},{"date":"2021-10-15","distance":1000,"time":"1.13,78","name":"2021 Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24105&r=5&s=46506"},{"date":"2021-10-16","distance":500,"time":"38,07","name":"2021 Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24105&r=8&s=46506"},{"date":"2021-10-16","distance":1500,"time":"1.53,58","name":"2021 Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24105&r=9&s=46506"},{"date":"2021-10-17","distance":5000,"time":"7.08,81","name":"2021 Oval International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24105&r=14&s=46506"},{"date":"2021-11-13","distance":500,"time":"37,99","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24277&r=20001&s=46506"},{"date":"2021-11-13","distance":3000,"time":"4.09,09","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24277&r=20003&s=46506"},{"date":"2021-11-19","distance":500,"time":"38,44","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24337&r=20001&s=46506"},{"date":"2021-11-19","distance":1000,"time":"1.14,38","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24337&r=20002&s=46506"},{"date":"2021-11-20","distance":5000,"time":"7.06,41","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24337&r=20005&s=46506"},{"date":"2021-11-21","distance":500,"time":"37,71","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24337&r=20006&s=46506"},{"date":"2021-11-21","distance":1500,"time":"1.53,46","name":"CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24337&r=20007&s=46506"},{"date":"2021-12-03","distance":500,"time":"38,40","name":"Canada Cup #1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24440&r=3&s=46506"},{"date":"2021-12-03","distance":1500,"time":"1.56,59","name":"Canada Cup #1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24440&r=4&s=46506"},{"date":"2021-12-04","distance":5000,"time":"7.14,61","name":"Canada Cup #1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24440&r=8&s=46506"},{"date":"2021-12-05","distance":500,"time":"38,39","name":"Canada Cup #1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24440&r=11&s=46506"},{"date":"2021-12-05","distance":1000,"time":"1.15,43","name":"Canada Cup #1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24440&r=12&s=46506"},{"date":"2022-02-05","distance":500,"time":"37,90","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=24970&r=20001&s=46506"},{"date":"2022-02-19","distance":500,"time":"37,26","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25110&r=20001&s=46506"},{"date":"2022-02-19","distance":1000,"time":"1.14,44","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25110&r=20006&s=46506"},{"date":"2022-03-11","distance":500,"time":"37,57","name":"Oval Grand Prix - Canada Cup 3","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25327&r=3&s=46506"},{"date":"2022-03-11","distance":1500,"time":"1.52,47","name":"Oval Grand Prix - Canada Cup 3","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25327&r=4&s=46506"},{"date":"2022-03-12","distance":5000,"time":"6.57,63","name":"Oval Grand Prix - Canada Cup 3","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25327&r=9&s=46506"},{"date":"2022-03-13","distance":500,"time":"37,73","name":"Oval Grand Prix - Canada Cup 3","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25327&r=12&s=46506"},{"date":"2022-03-17","distance":500,"time":"37,34","name":"Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25388&r=3&s=46506"},{"date":"2022-03-17","distance":1000,"time":"1.13,31","name":"Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25388&r=4&s=46506"},{"date":"2022-03-18","distance":5000,"time":"6.56,69","name":"Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25388&r=5&s=46506"},{"date":"2022-03-19","distance":500,"time":"37,14","name":"Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25388&r=8&s=46506"},{"date":"2022-03-20","distance":1500,"time":"1.51,47","name":"Oval Finale - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25388&r=14&s=46506"},{"date":"2022-08-27","distance":3000,"time":"4.00,63","name":"2022 Summer Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25508&r=20004&s=46506"},{"date":"2022-09-10","distance":500,"time":"38,03","name":"Time Trial","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25513&r=20001&s=46506"},{"date":"2022-09-10","distance":1500,"time":"1.53,21","name":"Time Trial","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25513&r=20003&s=46506"},{"date":"2022-09-23","distance":500,"time":"37,53","name":"2022 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25518&r=20001&s=46506"},{"date":"2022-09-23","distance":1500,"time":"1.50,91","name":"2022 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25518&r=20002&s=46506"},{"date":"2022-09-24","distance":5000,"time":"7.00,57","name":"2022 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25518&r=20006&s=46506"},{"date":"2022-11-18","distance":500,"time":"37,73","name":"2022 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25778&r=3&s=46506"},{"date":"2022-11-18","distance":1500,"time":"1.50,51","name":"2022 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25778&r=4&s=46506"},{"date":"2022-11-19","distance":5000,"time":"6.50,12","name":"2022 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25778&r=8&s=46506"},{"date":"2022-12-02","distance":1000,"time":"1.14,13","name":"Time Trial","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25887&r=20005&s=46506"},{"date":"2022-12-09","distance":500,"time":"38,14","name":"Canada Cup 1","location":"Fort St. John (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25958&r=1&s=46506"},{"date":"2022-12-09","distance":1500,"time":"1.53,79","name":"Canada Cup 1","location":"Fort St. John (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25958&r=2&s=46506"},{"date":"2022-12-10","distance":5000,"time":"6.58,60","name":"Canada Cup 1","location":"Fort St. John (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=25958&r=7&s=46506"},{"date":"2023-01-05","distance":500,"time":"37,99","name":"Canada Cup 2","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26179&r=3&s=46506"},{"date":"2023-01-05","distance":1500,"time":"1.52,59","name":"Canada Cup 2","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26179&r=4&s=46506"},{"date":"2023-01-06","distance":5000,"time":"6.57,90","name":"Canada Cup 2","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26179&r=10&s=46506"},{"date":"2023-01-27","distance":5000,"time":"7.36,03","name":"Canada Cup 3","location":"Winnipeg (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26447&r=2&s=46506"},{"date":"2023-01-29","distance":500,"time":"40,44","name":"Canada Cup 3","location":"Winnipeg (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26447&r=6&s=46506"},{"date":"2023-03-11","distance":5000,"time":"6.52,66","name":"Oval Grand Prix - Canada Cup 4","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26917&r=20007&s=46506"},{"date":"2023-03-17","distance":5000,"time":"6.55,38","name":"Olympic Oval Finale - Canada Cup 5","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26969&r=5&s=46506"},{"date":"2023-03-18","distance":500,"time":"37,54","name":"Olympic Oval Finale - Canada Cup 5","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26969&r=6&s=46506"},{"date":"2023-03-19","distance":1500,"time":"1.50,78","name":"Olympic Oval Finale - Canada Cup 5","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=26969&r=20011&s=46506"},{"date":"2023-08-26","distance":500,"time":"38,05","name":"2023 Summer Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27092&r=20001&s=46506"},{"date":"2023-08-27","distance":3000,"time":"3.59,72","name":"2023 Summer Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27092&r=8&s=46506"},{"date":"2023-09-16","distance":500,"time":"37,51","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27111&r=20001&s=46506"},{"date":"2023-09-16","distance":1500,"time":"1.52,91","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27111&r=20004&s=46506"},{"date":"2023-09-22","distance":500,"time":"37,14","name":"2023 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27112&r=20001&s=46506"},{"date":"2023-09-23","distance":1500,"time":"1.51,18","name":"2023 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27112&r=20005&s=46506"},{"date":"2023-09-24","distance":5000,"time":"6.57,68","name":"2023 Fall Classic","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27112&r=20008&s=46506"},{"date":"2023-10-05","distance":5000,"time":"6.59,57","name":"Canada - Long Track Championships 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27137&r=4&s=46506"},{"date":"2023-10-07","distance":1500,"time":"1.51,49","name":"Canada - Long Track Championships 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27137&r=13&s=46506"},{"date":"2023-11-04","distance":500,"time":"37,37","name":"Oktoberfest Classic 2023","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27272&r=8&s=46506"},{"date":"2023-11-04","distance":1500,"time":"1.49,84","name":"Oktoberfest Classic 2023","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27272&r=10&s=46506"},{"date":"2023-11-05","distance":1000,"time":"1.11,79","name":"Oktoberfest Classic 2023","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27272&r=13&s=46506"},{"date":"2023-11-25","distance":500,"time":"37,58","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27435&r=20001&s=46506"},{"date":"2023-12-01","distance":500,"time":"36,85","name":"2023 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27479&r=20001&s=46506"},{"date":"2023-12-01","distance":1000,"time":"1.11,69","name":"2023 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27479&r=20002&s=46506"},{"date":"2023-12-02","distance":1500,"time":"1.50,32","name":"2023 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27479&r=7&s=46506"},{"date":"2023-12-03","distance":5000,"time":"6.50,31","name":"2023 CanAm International","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27479&r=20010&s=46506"},{"date":"2023-12-30","distance":1000,"time":"1.12,12","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27804&r=20005&s=46506"},{"date":"2024-01-04","distance":500,"time":"37,83","name":"Canada Cup 1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27832&r=20001&s=46506"},{"date":"2024-01-04","distance":1500,"time":"1.54,43","name":"Canada Cup 1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27832&r=20002&s=46506"},{"date":"2024-01-05","distance":5000,"time":"7.09,22","name":"Canada Cup 1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27832&r=7&s=46506"},{"date":"2024-01-06","distance":1000,"time":"1.14,31","name":"Canada Cup 1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27832&r=20009&s=46506"},{"date":"2024-01-06","distance":10000,"time":"14.48,04","name":"Canada Cup 1","location":"Quebec City (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=27832&r=20011&s=46506"},{"date":"2024-02-03","distance":500,"time":"36,86","name":"Winter Classic 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28193&r=20003&s=46506"},{"date":"2024-02-03","distance":1500,"time":"1.51,35","name":"Winter Classic 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28193&r=20006&s=46506"},{"date":"2024-02-04","distance":1000,"time":"1.12,90","name":"Winter Classic 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28193&r=20007&s=46506"},{"date":"2024-03-02","distance":1000,"time":"1.12,40","name":"Time Trials","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28512&r=20005&s=46506"},{"date":"2024-03-07","distance":5000,"time":"6.58,45","name":"Olympic Oval Grand Prix - Canada Cup Final","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28572&r=20003&s=46506"},{"date":"2024-03-08","distance":1000,"time":"1.12,18","name":"Olympic Oval Grand Prix - Canada Cup Final","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28572&r=20004&s=46506"},{"date":"2024-03-09","distance":500,"time":"37,05","name":"Olympic Oval Grand Prix - Canada Cup Final","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28572&r=20007&s=46506"},{"date":"2024-03-09","distance":1500,"time":"1.51,69","name":"Olympic Oval Grand Prix - Canada Cup Final","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28572&r=20008&s=46506"},{"date":"2024-03-14","distance":500,"time":"36,87","name":"Olympic Oval Finale 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28637&r=1&s=46506"},{"date":"2024-03-14","distance":3000,"time":"3.59,24","name":"Olympic Oval Finale 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28637&r=2&s=46506"},{"date":"2024-03-15","distance":1500,"time":"1.53,04","name":"Olympic Oval Finale 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28637&r=12&s=46506"},{"date":"2024-03-16","distance":5000,"time":"7.03,17","name":"Olympic Oval Finale 2024","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=28637&r=20&s=46506"},{"date":"2025-03-22","distance":500,"time":"37,92","name":"2025 Olympic Oval Finale","location":"Calgary (CAN)","link":"https://www.speedskatingresults.com/index.php?p=3&e=30333&r=16&s=46506"}]/*END*/</script>
+
   <script>
-    // Click to select, like an old Windows desktop. Click empty space to deselect.
+    const races = JSON.parse(document.getElementById('data').textContent.replace(/^\/\*DATA\*\/|\/\*END\*\/$/g, ''));
+
+    // "1.01,27" -> "1:01.27"
+    const fmt = t => t.replace('.', ':').replace(',', '.');
+
+    const fmtSecs = x => {
+      const m = Math.floor(x / 60), r = (x - m * 60).toFixed(2);
+      return m ? `${m}:${r.padStart(5, '0')}` : r;
+    };
+
+    const toSecs = t => {
+      const [main, hund] = t.split(',');
+      const parts = main.split('.').map(Number);
+      return parts.reduce((a, v) => a * 60 + v, 0) + Number(hund) / 100;
+    };
+
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const shortDate = d => { const [, m, day] = d.split('-'); return `${MONTHS[m - 1]} ${+day}`; };
+    const longDate = d => { const [y, m, day] = d.split('-'); return `${MONTHS[m - 1]} ${+day}, ${y}`; };
+    // Skating seasons run July–June.
+    const season = d => { const [y, m] = d.split('-').map(Number); const s = m >= 7 ? y : y - 1; return `${s}–${String(s + 1).slice(2)}`; };
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    races.sort((a, b) => a.date.localeCompare(b.date) || a.distance - b.distance);
+
+    // Mark a race as a PB if it beat every earlier time at that distance.
+    const best = {};
+    for (const r of races) {
+      const s = toSecs(r.time);
+      r.pb = !(r.distance in best) || s < best[r.distance].s;
+      if (r.pb) best[r.distance] = { s, r };
+    }
+
+    document.getElementById('lede').textContent =
+      `From ${races[0].date.slice(0, 4)} to ${races.at(-1).date.slice(0, 4)} I completed ${races.length} speed skating races across Canada and the USA.`;
+
+    document.getElementById('prs').innerHTML = Object.keys(best).map(Number).sort((a, b) => a - b).map(d => {
+      const r = best[d].r;
+      return `<button type="button" data-d="${d}" aria-pressed="false"><span class="d">${d}m</span><span class="t">${fmt(r.time)}</span><small>${longDate(r.date)}</small></button>`;
+    }).join('');
+
+    // --- PB progression chart -------------------------------------------
+    const chart = document.getElementById('chart');
+    let shown = null;
+
+    function showChart(d, scroll) {
+      shown = shown === d ? null : d;
+      document.querySelectorAll('.prs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.d == shown));
+      chart.hidden = !shown;
+      if (!shown) return;
+      drawChart();
+      if (scroll) chart.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function drawChart() {
+      if (!shown) return;
+      const all = races.filter(r => r.distance == shown);
+      const pbs = all.filter(r => r.pb).map(r => ({ r, x: Date.parse(r.date), y: toSecs(r.time) }));
+      const first = pbs[0], last = pbs.at(-1);
+      const xEnd = Date.parse(all.at(-1).date);
+
+      const W = chart.clientWidth, H = 240, m = { l: 48, r: 12, t: 12, b: 26 };
+      const x0 = first.x, x1 = Math.max(xEnd, last.x + 864e5);
+      let y0 = Math.min(...pbs.map(p => p.y)), y1 = Math.max(...pbs.map(p => p.y));
+      const pad = (y1 - y0 || 1) * 0.08; y0 -= pad; y1 += pad;
+      const sx = v => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r);
+      const sy = v => m.t + (y1 - v) / (y1 - y0) * (H - m.t - m.b); // faster = lower
+
+      // ~4 tidy y ticks
+      const step = [0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300].find(s => (y1 - y0) / s <= 5);
+      const yt = [];
+      for (let v = Math.ceil(y0 / step) * step; v <= y1; v += step) yt.push(v);
+      const years = [];
+      for (let y = new Date(x0).getFullYear() + 1; Date.UTC(y, 0, 1) <= x1; y++) years.push(y);
+      const every = Math.ceil(years.length / Math.max(2, Math.floor((W - m.l) / 56)));
+
+      // Step line: a PB holds until the next one.
+      let path = `M${sx(first.x)},${sy(first.y)}`;
+      for (const p of pbs.slice(1)) path += `H${sx(p.x)}V${sy(p.y)}`;
+      path += `H${sx(x1)}`;
+
+      const dropped = fmtSecs(first.y - last.y);
+      chart.innerHTML = `
+        <h4>${shown}m personal best over time</h4>
+        <p>${pbs.length} PBs, from ${fmt(first.r.time)} (${first.r.date.slice(0, 4)}) to ${fmt(last.r.time)} (${last.r.date.slice(0, 4)}) — ${dropped}${dropped.includes(':') ? '' : 's'} faster.</p>
+        <svg width="${W}" height="${H}" role="img" aria-label="${shown}m personal best progression">
+          ${yt.map(v => `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${sy(v)}" y2="${sy(v)}"/>
+            <text x="${m.l - 8}" y="${sy(v) + 4}" text-anchor="end">${fmtSecs(v).replace(/\.00$/, '')}</text>`).join('')}
+          ${years.filter((_, i) => i % every === 0).map(y => `<text x="${sx(Date.UTC(y, 0, 1))}" y="${H - 6}" text-anchor="middle">${y}</text>`).join('')}
+          <path class="line" d="${path}"/>
+          <line class="cross" y1="${m.t}" y2="${H - m.b}" visibility="hidden"/>
+          ${pbs.map(p => `<circle class="dot" cx="${sx(p.x)}" cy="${sy(p.y)}" r="3.5"/>`).join('')}
+          <rect x="${m.l}" y="0" width="${W - m.l - m.r}" height="${H}" fill="transparent"/>
+        </svg>
+        <div class="tip" hidden></div>`;
+
+      const svg = chart.querySelector('svg'), tip = chart.querySelector('.tip'), cross = chart.querySelector('.cross');
+      const svgTop = svg.offsetTop;
+      svg.addEventListener('pointermove', e => {
+        const px = e.clientX - svg.getBoundingClientRect().left;
+        const p = pbs.reduce((a, b) => Math.abs(sx(b.x) - px) < Math.abs(sx(a.x) - px) ? b : a);
+        cross.setAttribute('x1', sx(p.x)); cross.setAttribute('x2', sx(p.x));
+        cross.setAttribute('visibility', 'visible');
+        tip.hidden = false;
+        tip.innerHTML = `<b>${fmt(p.r.time)}</b> · ${longDate(p.r.date)}<br>${esc(p.r.name)}`;
+        const half = tip.offsetWidth / 2;
+        const left = Math.min(Math.max(sx(p.x), half), W - half);
+        tip.style.left = left + 'px';
+        tip.style.top = svgTop + sy(p.y) + 'px';
+      });
+      svg.addEventListener('pointerleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); });
+    }
+
+    document.getElementById('prs').addEventListener('click', e => {
+      const b = e.target.closest('button');
+      if (b) showChart(b.dataset.d);
+    });
+    let rt;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawChart, 100); });
+
+    // --- Race list, newest first -----------------------------------------
+    const groups = new Map();
+    for (const r of [...races].sort((a, b) => b.date.localeCompare(a.date) || a.distance - b.distance)) {
+      const k = season(r.date);
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(r);
+    }
+    document.getElementById('results').innerHTML = [...groups].map(([k, rs]) => `
+      <details class="season">
+        <summary><h3>${k}</h3><span class="count">${rs.length} race${rs.length === 1 ? '' : 's'}</span></summary>
+        <ol>${rs.map(r => `
+          <li class="race${r.pb ? ' pb' : ''}">
+            <span class="date">${shortDate(r.date)}</span>
+            <button type="button" class="dist" data-d="${r.distance}">${r.distance}m</button>
+            <span class="time">${fmt(r.time)}</span>
+            <span class="event"><a href="${esc(r.link)}">${esc(r.name)}</a><span class="loc">${esc(r.location)}</span></span>
+          </li>`).join('')}
+        </ol>
+      </details>`).join('');
+
+    document.getElementById('results').addEventListener('click', e => {
+      const b = e.target.closest('.dist');
+      if (!b) return;
+      if (shown === b.dataset.d) shown = null; // always open, never toggle closed from a row
+      showChart(b.dataset.d, true);
+    });
+
+    // --- Folders ---------------------------------------------------------
+    // Click to select, like an old Windows desktop. Folders with contents
+    // open them below the row; click again to close.
     const icons = document.querySelectorAll('.icon');
+    let openId = null;
+
+    function openPanel(id, scroll) {
+      if (openId) document.getElementById(openId).hidden = true;
+      openId = id;
+      if (openId) document.getElementById(openId).hidden = false;
+      icons.forEach(i => i.classList.toggle('selected', !!openId && i.dataset.panel === openId));
+      try { history.replaceState(null, '', openId ? '#' + openId : location.pathname + location.search); } catch {}
+      if (openId && scroll) document.querySelector('.desktop').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // The red X closes the folder and returns to the default view.
+    document.querySelectorAll('.panel .close').forEach(b => b.addEventListener('click', () => {
+      openPanel(null);
+      scrollTo({ top: 0, behavior: 'smooth' });
+    }));
+
     icons.forEach(el => el.addEventListener('click', e => {
       e.preventDefault();
-      icons.forEach(i => i.classList.remove('selected'));
+      if (el.dataset.panel) return openPanel(openId === el.dataset.panel ? null : el.dataset.panel, true);
+      openPanel(null);
       el.classList.add('selected');
     }));
+    // Clicking empty space deselects, but leaves an open folder alone.
     document.addEventListener('click', e => {
-      if (!e.target.closest('.icon')) icons.forEach(i => i.classList.remove('selected'));
+      if (e.target.closest('.icon, .panel')) return;
+      icons.forEach(i => i.classList.toggle('selected', !!openId && i.dataset.panel === openId));
     });
+
+    // Open the folder named in the URL, e.g. /#speed-skating.
+    const fromHash = () => {
+      const id = location.hash.slice(1);
+      if (id && document.querySelector(`[data-panel="${CSS.escape(id)}"]`)) openPanel(id);
+    };
+    fromHash();
+    addEventListener('hashchange', fromHash);
   </script>
 </body>
 </html>
